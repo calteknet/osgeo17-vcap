@@ -1,0 +1,53 @@
+# VCAP Terrestrial Architecture — Offline Tile Cache
+# MapProxy 1.15.1 config
+services:
+  demo:
+  wms:
+    md:
+      title: VCAP Offline Tile Cache
+      abstract: Terrestrial Architecture classroom tile server — OSGeoLive 16.0
+
+layers:
+  - name: osm_prizren
+    title: OpenStreetMap Prizren (offline)
+    sources: [osm_cache]
+  - name: natural_earth
+    title: Natural Earth (offline)
+    sources: [ne_cache]
+
+caches:
+  osm_cache:
+    grids: [webmercator]
+    sources: [osm_wms]
+    cache:
+      type: file
+      directory: /home/user/vcap_tile_cache/osm
+  ne_cache:
+    grids: [webmercator]
+    sources: [ne_wms]
+    cache:
+      type: file
+      directory: /home/user/vcap_tile_cache/natural_earth
+
+sources:
+  osm_wms:
+    type: wms
+    req:
+      url: http://localhost:8080/geoserver/ows?
+      layers: osm:osm_line
+  ne_wms:
+    type: wms
+    req:
+      url: http://localhost:8080/geoserver/ows?
+      layers: sf:archsites
+
+grids:
+  webmercator:
+    base: GLOBAL_WEBMERCATOR
+
+globals:
+  cache:
+    base_dir: /home/user/vcap_tile_cache
+    lock_dir: /tmp/mapproxy_lock
+  http:
+    access_control_allow_origin: '*'

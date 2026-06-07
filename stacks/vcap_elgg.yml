@@ -1,0 +1,90 @@
+version: '3.8'
+
+networks:
+  vcap_net:
+    external: true
+    name: vcap_net
+
+volumes:
+  elgg_mariadb:
+  elgg_data:
+  elgg_static:
+  elgg_db_backup:
+  elgg_backup:
+
+services:
+
+  db:
+    image: mariadb:latest
+    container_name: elgg_db
+    restart: unless-stopped
+    volumes:
+      - elgg_mariadb:/var/lib/mysql
+      - elgg_db_backup:/backup
+    environment:
+      MARIADB_USER: ctn
+      MARIADB_PASSWORD: gaiter1990
+      MARIADB_DATABASE: elgg
+      MARIADB_ROOT_PASSWORD: gaiter1990
+    command: mariadbd-safe --skip-grant-tables
+    networks:
+      - vcap_net
+
+  elgg:
+    image: calteknet/elgg:latest
+    container_name: elgg_app
+    restart: unless-stopped
+    user: "33"
+    depends_on:
+      - db
+    networks:
+      - vcap_net
+    volumes:
+      - elgg_static:/opt/static
+      - elgg_data:/opt/data
+      - elgg_backup:/backup
+
+  nginx:
+    image: nginx:stable
+    container_name: elgg_nginx
+    restart: unless-stopped
+    depends_on:
+      - elgg
+    ports:
+      - "8086:80"
+    networks:
+      - vcap_net
+    volumes:
+      - elgg_static:/opt/static
+      - /mnt/p4/home/kmw/config/elgg/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.elgg.rule=Host(`idea.localhost`)"
+      - "traefik.http.routers.elgg.entrypoints=web"
+      - "traefik.http.services.elgg.loadbalancer.server.port=80"
+
+  backup:
+    image: alpine:latest
+    container_name: elgg_backup
+    restart: unless-stopped
+    volumes:
+      - elgg_mariadb:/source/db:ro
+      - elgg_data:/source/elgg:ro
+      - elgg_static:/source/static:ro
+      - elgg_db_backup:/backup/db
+      - elgg_backup:/backup/elgg
+    command: >
+      sh -c "
+        apk add --no-cache tar gzip;
+        while true; do
+          DATE=$$(date +%Y%m%d_%H%M%S);
+          tar -czf /backup/db/db_$$DATE.tar.gz -C /source/db . 2>/dev/null;
+          tar -czf /backup/elgg/elgg_$$DATE.tar.gz -C /source/elgg . 2>/dev/null;
+          cd /backup/db && ls -t | tail -n +6 | xargs rm -f 2>/dev/null;
+          cd /backup/elgg && ls -t | tail -n +6 | xargs rm -f 2>/dev/null;
+          echo \"Backup done: \$$DATE\";
+          sleep 86400;
+        done
+      "
+    networks:
+      - vcap_net
