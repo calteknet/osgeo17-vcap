@@ -124,7 +124,7 @@ mkdir -p /mnt/p4/home/kmw/vcap/slides /mnt/p4/home/kmw/config/slides
 docker start vcap_slides 2>/dev/null || docker compose -f /mnt/p4/home/kmw/osgeo17-vcap/stacks/vcap-slides.yml up -d
 echo "✓ Slides → http://localhost:8085 · https://caltek.net/slides"
 # Cloudflare tunnel full config
-cp /mnt/p4/home/kmw/osgeo17-vcap/config/cloudflared_config.yml /home/user/.cloudflared/config.yml
+cp /mnt/p4/home/kmw/osgeo17-vcap/config/cloudflared_config.yml /home/kmw/.cloudflared/config.yml
 pkill cloudflared 2>/dev/null || true; sleep 2
 cloudflared tunnel run exe-caltek &>/tmp/cloudflared.log &
 echo "✓ Tunnel → exe.caltek.net + caltek.net/slides"

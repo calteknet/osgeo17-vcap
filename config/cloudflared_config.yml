@@ -1,5 +1,5 @@
 tunnel: e7fbc420-297a-4fa6-922f-c8e2e0239cee
-credentials-file: /home/user/.cloudflared/e7fbc420-297a-4fa6-922f-c8e2e0239cee.json
+credentials-file: /home/kmw/.cloudflared/e7fbc420-297a-4fa6-922f-c8e2e0239cee.json
 ingress:
   - hostname: exe.caltek.net
     service: http://localhost:8084
