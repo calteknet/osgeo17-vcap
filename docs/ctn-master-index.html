@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CTN Master Index — CalTek.Net Knowledge Architecture</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Space+Mono:wght@400;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+:root{--y:#FFD500;--k:#090800;--brass:#C9A84C;--dim:#131200;--mid:#2a2700;--text:#e8deb0;--muted:#6a6430;--green:#3a8c50;--blue:#3a6888;--red:#8c3a3a;--purple:#6a3a8c;--teal:#3a7878;--code-bg:#0a0900;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--k);color:var(--text);font-family:'Crimson Pro',Georgia,serif;font-size:16px;line-height:1.75;padding-bottom:80px;}
+header{background:var(--y);padding:28px 48px 20px;border-bottom:5px solid var(--brass);}
+header h1{font-family:'Cinzel',serif;font-size:1.8rem;color:var(--k);font-weight:700;letter-spacing:.05em;line-height:1.2;}
+header p{font-family:'Space Mono',monospace;font-size:.62rem;color:#2a2600;margin-top:6px;letter-spacing:.1em;}
+nav{background:var(--dim);padding:14px 48px;border-bottom:1px solid var(--mid);display:flex;flex-wrap:wrap;gap:6px 16px;}
+nav a{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--brass);text-decoration:none;letter-spacing:.08em;}
+nav a:hover{color:var(--y);}
+.wrap{padding:40px 48px;}
+h2{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--y);border-bottom:1px solid var(--mid);padding-bottom:5px;margin:36px 0 16px;letter-spacing:.05em;}
+h3{font-family:'Space Mono',monospace;font-size:.75rem;color:var(--brass);margin:20px 0 8px;letter-spacing:.08em;text-transform:uppercase;}
+p{margin-bottom:10px;font-size:.95rem;}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:16px 0;}
+.card{background:var(--dim);border:1px solid var(--mid);border-radius:3px;padding:16px 18px;}
+.card.green{border-left:3px solid var(--green);}
+.card.blue{border-left:3px solid var(--blue);}
+.card.purple{border-left:3px solid var(--purple);}
+.card.teal{border-left:3px solid var(--teal);}
+.card.red{border-left:3px solid var(--red);}
+.card.brass{border-left:3px solid var(--brass);}
+.card h4{font-family:'Cinzel',serif;font-size:.85rem;color:var(--y);margin-bottom:6px;}
+.card .tag{font-family:'Space Mono',monospace;font-size:.58rem;color:var(--brass);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+.card ul{list-style:none;font-size:.82rem;line-height:1.8;}
+.card ul li::before{content:'→ ';color:var(--brass);font-family:'Space Mono',monospace;font-size:.65rem;}
+.card a{color:var(--blue);text-decoration:none;font-family:'Space Mono',monospace;font-size:.68rem;}
+.card a:hover{color:var(--y);}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.85rem;}
+th{background:var(--mid);color:var(--brass);font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:8px 12px;text-align:left;}
+td{padding:8px 12px;border-bottom:1px solid var(--mid);vertical-align:top;}
+tr:hover td{background:var(--dim);}
+.badge{display:inline-block;font-family:'Space Mono',monospace;font-size:.58rem;padding:1px 7px;border-radius:2px;margin:1px;letter-spacing:.05em;}
+.b-tech{background:#0a1520;color:#90c0e0;border:1px solid var(--blue);}
+.b-civic{background:#180a1a;color:#c090e0;border:1px solid var(--purple);}
+.b-edu{background:#0d1a10;color:#90e0a0;border:1px solid var(--green);}
+.b-geo{background:#0a1a1a;color:#90e0e0;border:1px solid var(--teal);}
+.b-biz{background:#1a0d0a;color:#e0a090;border:1px solid var(--red);}
+.chat-ref{background:var(--dim);border:1px solid var(--mid);border-left:3px solid var(--brass);padding:10px 14px;margin:8px 0;border-radius:2px;font-family:'Space Mono',monospace;font-size:.68rem;color:var(--muted);}
+.chat-ref span{color:var(--y);}
+.chat-ref a{color:var(--blue);}
+footer{margin:40px 48px 0;font-family:'Space Mono',monospace;font-size:.6rem;color:var(--muted);border-top:1px solid var(--mid);padding-top:14px;letter-spacing:.08em;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>CTN Master Index<br>CalTek.Net Knowledge Architecture</h1>
+  <p>California TekNowledgy Network · FLOSS · ERP · IIAB · Community Sovereignty · Est. 1997 · Rev June 2026</p>
+</header>
+
+<nav>
+  <a href="#people">People</a>
+  <a href="#infrastructure">Infrastructure</a>
+  <a href="#programs">Programs</a>
+  <a href="#curriculum">Curriculum</a>
+  <a href="#civic">Civic</a>
+  <a href="#geography">Geography</a>
+  <a href="#terminology">Terminology</a>
+  <a href="#chats">Chat Index</a>
+  <a href="#slides">Slides Plan</a>
+</nav>
+
+<div class="wrap">
+
+<!-- ══ PEOPLE ══ -->
+<h2 id="people">People — CTN Community Members</h2>
+<div class="card-grid">
+
+  <div class="card brass">
+    <div class="tag">Founder · Director</div>
+    <h4>Kenneth Wyrick (KMW)</h4>
+    <ul>
+      <li>CalTek.Net Project Director — Est. 1997</li>
+      <li>ASNTB TimeBank Administrator (12-yr audit)</li>
+      <li>BHNC Co-Founder 2002 · bhnc.org</li>
+      <li>CTCNet Founding Board Member</li>
+      <li>LINCT Western Regional Director</li>
+      <li>Fine Arts Conservator (ret.) — LACMA/Cecil Fergerson</li>
+      <li>Keyboards + Trumpet (embouchure rebuilding)</li>
+      <li>github.com/kmw · @kwyrick Archive.org</li>
+    </ul>
+  </div>
+
+  <div class="card blue">
+    <div class="tag">DevOps / SRE</div>
+    <h4>Josh Santos</h4>
+    <ul>
+      <li>OmnidApps LLC</li>
+      <li>Docker Swarm · Portainer · Odoo CE</li>
+      <li>shec.us / 48gb.caltek.net nodes</li>
+      <li>Odoo 18→19 migration runbook</li>
+    </ul>
+  </div>
+
+  <div class="card green">
+    <div class="tag">Program Systems</div>
+    <h4>Candy Tanamachi</h4>
+    <ul>
+      <li>Tutortronics DBA</li>
+      <li>29 Dines Executive / MUSD ELOP</li>
+      <li>$274K contract · 11 sites · 800 students</li>
+      <li>rhsrider.org co-creator</li>
+    </ul>
+  </div>
+
+  <div class="card green">
+    <div class="tag">VCAP Methodology · LAUSD</div>
+    <h4>Dr. Michael Rendler</h4>
+    <ul>
+      <li>VCAP terrestrial architecture</li>
+      <li>vcap.club · 2 LAUSD schools</li>
+      <li>Jack Rendler / AURA Engine connection</li>
+    </ul>
+  </div>
+
+  <div class="card green">
+    <div class="tag">STEM Lab · First 5 LA</div>
+    <h4>Dr. Michael Batie</h4>
+    <ul>
+      <li>STEM54 · 2717 54th St South LA</li>
+      <li>Mobile Math Lab · First 5 LA</li>
+      <li>vcap.club server planned at STEM54</li>
+    </ul>
+  </div>
+
+  <div class="card purple">
+    <div class="tag">Drone Education · FAA CTE</div>
+    <h4>Flanzie Thomas</h4>
+    <ul>
+      <li>ACTS — Aerial/Construction/Technical/Specialty</li>
+      <li>FAA Part 107 certified</li>
+      <li>Certified Scrum Master</li>
+      <li>dronecap.net brand</li>
+    </ul>
+  </div>
+
+  <div class="card purple">
+    <div class="tag">Kaos Networks · Leimert Park</div>
+    <h4>Ben Caldwell</h4>
+    <ul>
+      <li>Sankofa Village · Leimert Park</li>
+      <li>LAUSD MOU · July 30-hr PD</li>
+      <li>CTCNet / CTN legacy connection</li>
+    </ul>
+  </div>
+
+  <div class="card teal">
+    <div class="tag">Community Partner</div>
+    <h4>Debra McLaurin</h4>
+    <ul>
+      <li>ABJS Inc. — Adorable Babies Jump Start</li>
+      <li>Drone Girlz · dronegirlz.org</li>
+      <li>FIFA 2026 · SoFi Stadium</li>
+    </ul>
+  </div>
+
+  <div class="card teal">
+    <div class="tag">Sierra Leone · Edmondson</div>
+    <h4>Gloria R. Jones</h4>
+    <ul>
+      <li>Cousin · Singer · 1964 "Tainted Love"</li>
+      <li>32+ years Makini, Sierra Leone</li>
+      <li>Mark Bolan School of Music and Film</li>
+      <li>gloriarjones.net</li>
+    </ul>
+  </div>
+
+  <div class="card brass">
+    <div class="tag">Living Archive · OASC</div>
+    <h4>Mary Louise Reeves</h4>
+    <ul>
+      <li>104 years old — June 9, 2026 birthday</li>
+      <li>OASC · Dr. Genevieve Shepherd connection</li>
+      <li>Black History Bus Tour introducer</li>
+      <li>ASALH · Boyle Heights living primary source</li>
+    </ul>
+  </div>
+
+  <div class="card brass">
+    <div class="tag">Father's Time · Collaboration</div>
+    <h4>Spenser Holman</h4>
+    <ul>
+      <li>Father's Time collaboration framework</li>
+      <li>5 Levels of Affiliation</li>
+      <li>5 Stages of Collaboration</li>
+      <li>PDF + video resources → caltek.net/slides</li>
+    </ul>
+  </div>
+
+  <div class="card red">
+    <div class="tag">Allensworth · FOA</div>
+    <h4>Denise Kadara</h4>
+    <ul>
+      <li>Friends of Allensworth</li>
+      <li>Juneteenth 2026 · Oct 10 50th Anniversary</li>
+      <li>Gold Runner discount coordination</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ══ INFRASTRUCTURE ══ -->
+<h2 id="infrastructure">Infrastructure — CTN Swarm & Nodes</h2>
+<table>
+  <tr><th>Node</th><th>Role</th><th>OS</th><th>Services</th><th>Domain</th></tr>
+  <tr><td>48gb.caltek.net</td><td>Swarm Leader</td><td>Debian 13</td><td>Portainer, swarm mgmt</td><td>48gb.caltek.net</td></tr>
+  <tr><td>shec.us</td><td>Swarm Manager</td><td>Debian 13</td><td>ctn-o18, ctn-o19, Postgres</td><td>shec.us</td></tr>
+  <tr><td>la.caltek.net</td><td>Worker</td><td>Ubuntu 24.04</td><td>caltek.net web</td><td>la.caltek.net</td></tr>
+  <tr><td>i7 ThinkPad kmw-20hgs0cl00</td><td>Nomadic</td><td>OSGeoLive 17 (installed)</td><td>exe.caltek.net, slides, Elgg, PostGIS</td><td>exe.caltek.net</td></tr>
+  <tr><td>Menlo Ave Pi</td><td>Edge</td><td>Pi OS</td><td>IIAB, ambient sound</td><td>menlola.net</td></tr>
+  <tr><td>Boyle Ave Pi</td><td>Edge</td><td>Pi OS</td><td>Photobooth</td><td>—</td></tr>
+  <tr><td>STEM54 Pi</td><td>Edge planned</td><td>Pi OS</td><td>vcap.club server</td><td>vcap.club</td></tr>
+  <tr><td>19.caltek.net</td><td>Incubator planned</td><td>Debian</td><td>Odoo 19 CE per domain</td><td>19.caltek.net</td></tr>
+</table>
+
+<h3>Live Services</h3>
+<table>
+  <tr><th>Service</th><th>Local</th><th>Public</th><th>Stack</th></tr>
+  <tr><td>eXeLearning</td><td>localhost:8084</td><td>https://exe.caltek.net</td><td>exelearning</td></tr>
+  <tr><td>Slides</td><td>localhost:8085</td><td>https://caltek.net/slides</td><td>vcap-slides</td></tr>
+  <tr><td>Portainer</td><td>localhost:9000</td><td>https://portainer.caltek.net</td><td>portainer</td></tr>
+  <tr><td>Elgg</td><td>localhost:8086</td><td>idea.caltek.net planned</td><td>vcap-elgg</td></tr>
+  <tr><td>Traefik</td><td>localhost:8090</td><td>—</td><td>traefik</td></tr>
+  <tr><td>GeoServer</td><td>localhost:8082</td><td>—</td><td>vcap_docker_geoserver</td></tr>
+  <tr><td>MapProxy</td><td>localhost:8070</td><td>—</td><td>mapproxy</td></tr>
+  <tr><td>Jupyter</td><td>localhost:8888</td><td>—</td><td>jupyter</td></tr>
+  <tr><td>PostGIS</td><td>localhost:5432</td><td>—</td><td>postgresql</td></tr>
+  <tr><td>Odoo 19 CE</td><td>—</td><td>caltek.net/odoo</td><td>ctn-o19 @ shec.us</td></tr>
+</table>
+
+<!-- ══ PROGRAMS ══ -->
+<h2 id="programs">Programs</h2>
+<div class="card-grid">
+
+  <div class="card green">
+    <div class="tag">ELOP · 29 Palms</div>
+    <h4>29 Dines / Harvest & Thrive</h4>
+    <ul>
+      <li>$274,488.60 MUSD ELOP contract</li>
+      <li>11 elementary sites · TK–5 · ~800 students</li>
+      <li>Kolibri · Moodle · eXeLearning · Nextcloud</li>
+      <li>Standalone Portainer on HP Mini in 29 Palms</li>
+    </ul>
+  </div>
+
+  <div class="card blue">
+    <div class="tag">GIS · CTE · Curriculum</div>
+    <h4>VCAP Nomadic Classroom</h4>
+    <ul>
+      <li>OSGeoLive 17 distro customization</li>
+      <li>github.com/calteknet/osgeo17-vcap</li>
+      <li>8-week CTN curriculum framework</li>
+      <li>exe.caltek.net · caltek.net/slides</li>
+    </ul>
+  </div>
+
+  <div class="card purple">
+    <div class="tag">FIFA 2026 · SoFi</div>
+    <h4>ABJS / Drone Girlz</h4>
+    <ul>
+      <li>8 FIFA matches June 12–July 10</li>
+      <li>Volunteer onboarding · Odoo CSVs</li>
+      <li>TimeBank T$ architecture</li>
+      <li>xAPI/photobooth interoperability</li>
+    </ul>
+  </div>
+
+  <div class="card teal">
+    <div class="tag">Juneteenth 2026</div>
+    <h4>Friends of Allensworth</h4>
+    <ul>
+      <li>June 13 Juneteenth Festival</li>
+      <li>Oct 10 50th Anniversary Rededication</li>
+      <li>Gold Runner · Amtrak coordination</li>
+      <li>3,000–4,000 Nov 2026 projected</li>
+    </ul>
+  </div>
+
+  <div class="card red">
+    <div class="tag">Podcast · Wellness</div>
+    <h4>New Hope / DRESSS</h4>
+    <ul>
+      <li>Host: Kenneth · Guest: Dr. Erna Wong MD</li>
+      <li>DRESSS framework (Diet/Reduce Stress/Exercise/Sleep/Supplements/Sexual Wellness)</li>
+      <li>AO Scan · Solex Global</li>
+    </ul>
+  </div>
+
+  <div class="card brass">
+    <div class="tag">Oral History · Conservation</div>
+    <h4>CTN Media / Blinky Williams</h4>
+    <ul>
+      <li>H.B. Barnum choir recording April 2026</li>
+      <li>PreSonus StudioLive 32S · 6-camera</li>
+      <li>LA-UC.com · la-uc.com → caltek.net</li>
+      <li>RHS alumni band · Omeka-S archive</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ══ CURRICULUM ══ -->
+<h2 id="curriculum">Curriculum & .elpx Structure</h2>
+<table>
+  <tr><th>File</th><th>Pages</th><th>Contents</th><th>Location</th></tr>
+  <tr><td>ctn-vcap-roadmap-final.elpx</td><td>24</td><td>iDevice reference (7) + Chapter 8 8-week UoL (8) + Strategic Roadmap 4 phases (7) + xAPI + Distro + BizDev</td><td>exelearning:/mnt/data/</td></tr>
+</table>
+<h3>Chapter 8 — 8-Week CTN Framework</h3>
+<table>
+  <tr><th>Week</th><th>Title</th><th>iDevice</th><th>VCAP Original</th></tr>
+  <tr><td>1</td><td>Community Technology Assessment</td><td>Case Study</td><td>Measurement</td></tr>
+  <tr><td>2</td><td>Infrastructure Sovereignty</td><td>Multi-Choice Quiz</td><td>Utility Systems</td></tr>
+  <tr><td>3</td><td>Service Architecture Types</td><td>Image Gallery</td><td>Building Facility Types</td></tr>
+  <tr><td>4</td><td>Community Technology Governance</td><td>Reflection</td><td>Community Activity</td></tr>
+  <tr><td>5</td><td>Technology Ecology Mapping</td><td>Free Text</td><td>Natural Systems</td></tr>
+  <tr><td>6</td><td>System Dynamics</td><td>External Web Site</td><td>Computer-aided Policy</td></tr>
+  <tr><td>7</td><td>Documentation Technology</td><td>UoL Project</td><td>Blog Technology</td></tr>
+  <tr><td>8</td><td>Community Technology Action Plans</td><td>Presentation Tool</td><td>Final Presentation</td></tr>
+</table>
+
+<!-- ══ CIVIC ══ -->
+<h2 id="civic">Civic Frameworks</h2>
+<div class="card-grid">
+  <div class="card purple">
+    <div class="tag">Father's Time · Holman</div>
+    <h4>5 Levels of Affiliation</h4>
+    <ul>
+      <li>1. Networking</li>
+      <li>2. Cooperation</li>
+      <li>3. Coordination</li>
+      <li>4. Coalition</li>
+      <li>5. Collaboration</li>
+    </ul>
+  </div>
+  <div class="card purple">
+    <div class="tag">Father's Time · Holman</div>
+    <h4>5 Stages of Collaboration</h4>
+    <ul>
+      <li>1. Getting Started</li>
+      <li>2. Building Trust & Ownership</li>
+      <li>3. Developing Strategic Plan</li>
+      <li>4. Taking Action</li>
+      <li>5. Going to Scale</li>
+    </ul>
+  </div>
+  <div class="card teal">
+    <div class="tag">TimeBanking · Edgar Cahn</div>
+    <h4>Co-Production Framework</h4>
+    <ul>
+      <li>Time Dollar (T$) currency</li>
+      <li>ASNTB Boyle Heights</li>
+      <li>12-year clean audit record</li>
+      <li>bhtb.ushahidi.io</li>
+    </ul>
+  </div>
+  <div class="card brass">
+    <div class="tag">AI Ethics · DJ Noj</div>
+    <h4>Ma'at Protocol</h4>
+    <ul>
+      <li>Kemetic Ma'at principles</li>
+      <li>Mapped to Odoo 18/19 CE governance</li>
+      <li>Accelerated Schools connection</li>
+      <li>Afrogogy pedagogical framework</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══ GEOGRAPHY ══ -->
+<h2 id="geography">Geography — CTN Service Areas</h2>
+<table>
+  <tr><th>Geography</th><th>CTN Anchor</th><th>Key Contact</th><th>Tools</th></tr>
+  <tr><td>Boyle Heights</td><td>3156 Boulder St · BHNC · ASNTB</td><td>KMW</td><td>bhtb.ushahidi.io · bhnc.org</td></tr>
+  <tr><td>Pico Union</td><td>CTN HQ · menlola.net Pi</td><td>KMW</td><td>ctn-soundwatch · InfluxDB</td></tr>
+  <tr><td>South LA / STEM54</td><td>2717 54th St</td><td>Dr. Batie</td><td>vcap.club · PostGIS</td></tr>
+  <tr><td>Leimert Park</td><td>Kaos Networks / Sankofa Village</td><td>Ben Caldwell</td><td>WECAN · Art Walk</td></tr>
+  <tr><td>Watts</td><td>WLCAC · Metro 103rd</td><td>Jackie Badeo · Tim Watkins</td><td>Ushahidi · VCAP</td></tr>
+  <tr><td>29 Palms</td><td>MUSD · Morongo Valley</td><td>Candy / Terence Latimer</td><td>29dines.org · Kolibri</td></tr>
+  <tr><td>Allensworth</td><td>FOA · APA</td><td>Denise Kadara</td><td>Gold Runner · Odoo events</td></tr>
+  <tr><td>Sierra Leone</td><td>Edmondson Institute · Makini</td><td>Gloria R. Jones</td><td>IIAB · AzuraCast · drones</td></tr>
+  <tr><td>Las Vegas Westside</td><td>Harlem Nights / E7</td><td>—</td><td>Omeka-S · VCAP</td></tr>
+</table>
+
+<!-- ══ TERMINOLOGY ══ -->
+<h2 id="terminology">CTN Terminology — Concepts & Structures</h2>
+<table>
+  <tr><th>Term</th><th>Definition</th><th>Category</th></tr>
+  <tr><td>Community Technology Sovereignty</td><td>Community ownership and democratic control of technology infrastructure, services, and governance — independent of commercial platforms</td><td><span class="badge b-civic">Civic</span></td></tr>
+  <tr><td>VCAP</td><td>Visualization Community Action Planning — terrestrial architecture methodology developed by Michael Rendler for community GIS and spatial planning</td><td><span class="badge b-edu">Curriculum</span></td></tr>
+  <tr><td>IIAB</td><td>Internet-in-a-Box — offline knowledge server deployable on Pi hardware; CTN has deployed to 5 schools in Ghana</td><td><span class="badge b-tech">Tech</span></td></tr>
+  <tr><td>FLOSS</td><td>Free/Libre Open Source Software — the philosophical and practical foundation of all CTN infrastructure choices</td><td><span class="badge b-tech">Tech</span></td></tr>
+  <tr><td>Nomadic Classroom</td><td>Portable OSGeoLive 17 boot stack that deploys a full VCAP curriculum environment from USB or SD card on any machine</td><td><span class="badge b-edu">Curriculum</span></td></tr>
+  <tr><td>Docker Swarm</td><td>CTN's 3-node container orchestration cluster managed via Portainer; nodes: 48gb (leader), shec.us (manager), la.caltek.net (worker)</td><td><span class="badge b-tech">Tech</span></td></tr>
+  <tr><td>Portainer Stack</td><td>Named Docker Compose deployment managed through Portainer UI — the standard unit of CTN service deployment; never bare docker run</td><td><span class="badge b-tech">Tech</span></td></tr>
+  <tr><td>Cloudflare Tunnel</td><td>Zero-trust encrypted connection from local service to public domain without opening firewall ports; CTN tunnel: exe-caltek (ID: e7fbc420)</td><td><span class="badge b-tech">Tech</span></td></tr>
+  <tr><td>eXeLearning</td><td>FLOSS authoring tool for creating .elpx curriculum packages with iDevices; CTN uses for VCAP, MUSD, drone CTE content</td><td><span class="badge b-edu">Curriculum</span></td></tr>
+  <tr><td>.elpx</td><td>eXeLearning package format — ZIP archive containing content.xml and HTML exports; supports xAPI/SCORM for LRS tracking</td><td><span class="badge b-edu">Curriculum</span></td></tr>
+  <tr><td>xAPI / Tin Can</td><td>Experience API — learning analytics standard; Actor→Verb→Object statements sent to Learning Locker LRS for VCAP milestone tracking</td><td><span class="badge b-edu">Curriculum</span></td></tr>
+  <tr><td>T$ / Time Dollar</td><td>TimeBanking currency unit — 1 hour of service = 1 T$; managed in ASNTB under Community Partners fiscal sponsorship</td><td><span class="badge b-civic">Civic</span></td></tr>
+  <tr><td>Adinkra CTN Mark</td><td>CTN brand symbol system: Sankofa-C, Nyame Dua-T, Nkyinkyim-N; Adinkra Brass #C9A84C as rule color</td><td><span class="badge b-biz">Brand</span></td></tr>
+  <tr><td>Phi Taxonomy</td><td>CTN layout system based on golden ratio φ³→φ⁰ governing print dimensions, crop presets, session durations</td><td><span class="badge b-biz">Brand</span></td></tr>
+  <tr><td>19.caltek.net</td><td>Planned Odoo 19 CE incubator — each domain (vcap.club, dronecap.net, etc.) gets its own o19 instance before graduating to production swarm</td><td><span class="badge b-tech">Tech</span></td></tr>
+  <tr><td>ctn-soundwatch</td><td>Community acoustic monitoring stack for Pico Union/MacArthur Park — InfluxDB + Grafana + Python FFT/WAV capture on Pi nodes</td><td><span class="badge b-tech">Tech</span></td></tr>
+  <tr><td>Elgg</td><td>FLOSS social networking platform; CTN system-of-record for social artifacts at idea.caltek.net; Odoo = system-of-record for transactional records</td><td><span class="badge b-tech">Tech</span></td></tr>
+  <tr><td>Afrogogy</td><td>Pedagogical framework centering African and African-diaspora learning traditions; intersects with Ma'at Protocol and CTN curriculum design</td><td><span class="badge b-edu">Curriculum</span></td></tr>
+  <tr><td>D.O.N.E.</td><td>LA City Department of Neighborhood Empowerment — 12 geographic service areas mapped to VCAP 7-step process in Phase 3</td><td><span class="badge b-civic">Civic</span></td></tr>
+  <tr><td>Boyle Heights Tri</td><td>Three overlapping BH geographies: LA Planning District + BHNC neighborhood council + ASNTB TimeBank service area</td><td><span class="badge b-geo">Geography</span></td></tr>
+</table>
+
+<!-- ══ CHAT INDEX ══ -->
+<h2 id="chats">Chat Index — Prior Session Reference</h2>
+<div class="chat-ref"><span>OSGeoLive 17 VCAP Nomadic Classroom (this session)</span><br>Docker boot · GitHub repo · exe.caltek.net · slides · Chapter 8 UoL · Strategic Roadmap · internal drive install · elgg_db fix in progress</div>
+<div class="chat-ref"><span>Allensworth / Kick Racism Collaboration</span> · May 2026<br><a href="https://claude.ai/chat/9c0c66d3-8a15-4779-a0cb-27673dae12f9">claude.ai/chat/9c0c66d3</a> — ML Reeves oral history setup · Florene Garrison · OASC · Black History Bus Tour · Pi recording · FOA chapters</div>
+<div class="chat-ref"><span>Community Partners Proposal / Father's Time</span> · Jan 2026<br><a href="https://claude.ai/chat/0c098b12-91c5-4a1e-a387-3c8c3a0d2246">claude.ai/chat/0c098b12</a> — Spenser Holman 5 Levels · 5 Stages · CTCNet model · church engagement · Civic Power Grid Zones</div>
+<div class="chat-ref"><span>eXeLearning iDevice Reference / Akinsanya / Ma'at</span> · Mar 2026<br><a href="https://claude.ai/chat/e0e0f021-0759-4f90-9286-97f250d96e53">claude.ai/chat/e0e0f021</a> — .elpx/.elp format · 24 iDevices · FAA drone CTE · RHS newsletter · xAPI BadgeMap flow · Fatdog/TurnKey</div>
+<div class="chat-ref"><span>Offline LAUSD Chromebook / IIAB Architecture</span> · Apr 2026<br><a href="https://claude.ai/chat/c13e8781-b203-4d68-b7f8-d49a06191bba">claude.ai/chat/c13e8781</a> — CTN Teknology Taxonomy · glossary JSON · VCAP 8-week SCORM · Chromebook offline delivery</div>
+<div class="chat-ref"><span>CalTekNet Workforce Development</span> · Jun 2025<br><a href="https://claude.ai/chat/90e95407-e6af-4cad-b472-cc39a3cc9825">claude.ai/chat/90e95407</a> — Annotated TOC · Index of terms by functional group · Alpha glossary · HTML5/PDF/MD</div>
+<div class="chat-ref"><span>Juneteenth / Leimert Park Tri-Fecta</span> · Jun 2025<br><a href="https://claude.ai/chat/ca68a200-ed5b-44c8-85ad-6dec1fd96d2d">claude.ai/chat/ca68a200</a> — Father's Day + Juneteenth + Summer Solstice + Art Walk · flag robot · geo-location</div>
+
+<!-- ══ SLIDES PLAN ══ -->
+<h2 id="slides">Father's Time Slides Plan — caltek.net/slides/fathers-time/</h2>
+<h3>Source Materials</h3>
+<table>
+  <tr><th>Asset</th><th>Format</th><th>Source</th><th>Action</th></tr>
+  <tr><td>Father's Time collaboration framework</td><td>PDF</td><td>Spenser Holman</td><td>Upload to /mnt/p4/home/kmw/vcap/slides/fathers-time/</td></tr>
+  <tr><td>Father's Time video resources</td><td>MP4/MKV</td><td>Holman / CTN archive</td><td>Transcode → WebM · embed in slides</td></tr>
+  <tr><td>5 Levels of Affiliation diagram</td><td>Build</td><td>Chat reference</td><td>Create as SVG → Reveal.js slide</td></tr>
+  <tr><td>5 Stages of Collaboration</td><td>Build</td><td>Chat reference</td><td>Interactive iDevice in .elpx</td></tr>
+  <tr><td>CTCNet agency-by-agency model</td><td>Build</td><td>Prior chat</td><td>Timeline slide + Odoo partner profile</td></tr>
+</table>
+<h3>Deck Structure — fathers-time/index.html</h3>
+<ul style="margin-left:20px;margin-bottom:12px;font-size:.9rem;line-height:2;">
+  <li>Slide 1 — Title: Father's Time · Community Technology Collaboration Framework</li>
+  <li>Slide 2 — Who is Spenser Holman · Context and origin</li>
+  <li>Slide 3 — 5 Levels of Affiliation (interactive diagram)</li>
+  <li>Slide 4 — 5 Stages of Collaboration (process flow)</li>
+  <li>Slide 5 — CTCNet Model: One Agency at a Time</li>
+  <li>Slide 6 — Boys & Girls Clubs as largest sub-community</li>
+  <li>Slide 7 — Church Engagement Strategy</li>
+  <li>Slide 8 — CalTekNet application: mapping current partners to 5 levels</li>
+  <li>Slide 9 — Video resources (embedded)</li>
+  <li>Slide 10 — PDF download link + caltek.net/odoo contact</li>
+</ul>
+<h3>To Deploy</h3>
+<p style="font-family:'Space Mono',monospace;font-size:.72rem;background:var(--dim);padding:12px 16px;border-left:3px solid var(--y);margin-top:8px;">
+1. Get PDF + video files from Spenser Holman<br>
+2. mkdir -p /mnt/p4/home/kmw/vcap/slides/fathers-time/<br>
+3. Drop PDF + video + index.html into that folder<br>
+4. nginx serves immediately — no restart needed (bind mount)<br>
+5. Accessible at: https://caltek.net/slides/fathers-time/
+</p>
+
+</div><!-- end wrap -->
+
+<footer>CalTek.Net · FLOSS TekNowledgy · Est. 1997 · Los Angeles · caltek.net · github.com/calteknet · Master Index Rev June 2026</footer>
+</body>
+</html>
