@@ -1,0 +1,9 @@
+NAMES         IMAGE                                    PORTS
+php-fpm       calteknet/elgg:latest                    9000/tcp
+elgg_nginx    nginx:stable                             0.0.0.0:8086->80/tcp, [::]:8086->80/tcp
+elgg_backup   alpine:latest                            
+elgg_db       mariadb:11.4                             3306/tcp
+vcap_slides   nginx:stable                             0.0.0.0:8085->80/tcp, [::]:8085->80/tcp
+exelearning   ghcr.io/exelearning/exelearning:latest   0.0.0.0:8084->8080/tcp, [::]:8084->8080/tcp
+traefik       traefik:v3.0                             80/tcp, 0.0.0.0:81->81/tcp, [::]:81->81/tcp, 0.0.0.0:8090->8080/tcp, [::]:8090->8080/tcp
+portainer     portainer/portainer-ce:latest            8000/tcp, 9443/tcp, 0.0.0.0:9000->9000/tcp, [::]:9000->9000/tcp

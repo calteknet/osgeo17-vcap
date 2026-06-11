@@ -1,0 +1,6 @@
+{
+  "storage-driver": "vfs",
+  "data-root": "/mnt/p4/docker-data",
+  "log-driver": "json-file",
+  "log-opts": {"max-size": "10m", "max-file": "3"}
+}

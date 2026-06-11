@@ -1,0 +1,6 @@
+live-osgoe-ctn-vcap_elgg_backup
+live-osgoe-ctn-vcap_elgg_data
+live-osgoe-ctn-vcap_elgg_db_backup
+live-osgoe-ctn-vcap_elgg_mariadb
+live-osgoe-ctn-vcap_elgg_static
+portainer_data
