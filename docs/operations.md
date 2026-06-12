@@ -67,3 +67,45 @@ Current rules:
   ID:          e7fbc420-297a-4fa6-922f-c8e2e0239cee
   Credentials: /home/user/.cloudflared/e7fbc420-297a-4fa6-922f-c8e2e0239cee.json
   Backup:      /mnt/p4/home/kmw/cloudflared_config/
+## OP-09 — elgg_db init failure, recovery, and host hardening (2026-06-09 → 2026-06-11)
+
+**Stack:** live-osgoe-ctn-vcap · **Host:** kmw-20hgs0cl00 (OSGeoLive 17, data on /mnt/p4)
+
+### Symptom
+elgg_db crash-looped for ~1 week. Elgg unreachable at localhost:8086.
+
+### Root cause
+`command: mariadbd-safe --skip-grant-tables` left in the compose db service.
+It bypassed the official MariaDB entrypoint, so the 2026-06-01 first boot never
+completed initialization (zeroed ibdata1, no elgg database, auth disabled).
+All backups to that date were raw-file tars of the broken datadir — unusable.
+
+### Fix
+1. Destroyed the volume through Docker (`docker volume rm`), not host paths.
+2. Corrected compose: removed skip-grant-tables, pinned `mariadb:11.4`,
+   backup switched to `mariadb-dump --single-transaction | gzip` (14-day retention),
+   added db healthcheck. Redeployed via Portainer; Elgg reinstalled 2026-06-11.
+
+### Verification (2026-06-11)
+- elgg_db `Up (healthy)`; Elgg renders and admin login works at localhost:8086.
+- Manual dump: 679.5K `db_20260611_174200.sql.gz` containing real SQL.
+- Root password identical across elgg_db and elgg_backup (md5 compare).
+- Empty/corrupt Jun-11 dump files removed.
+
+### Host hardening applied
+- `/etc/fstab`: `UUID=e6ab2220-… /mnt/p4 ext4 defaults,nofail 0 2`
+- `/etc/systemd/system/docker.service.d/p4-mount.conf`: `RequiresMountsFor=/mnt/p4`
+- cloudflared tunnel `exe-caltek` moved from a bare user process to
+  `/etc/systemd/system/cloudflared-exe.service` (enabled, Restart=always).
+  This closes the multi-day exe.caltek.net outage vector.
+- `docker swarm init --advertise-addr 127.0.0.1` — laptop is its own
+  single-node swarm for stack-syntax parity with production. It never joins
+  the 48gb/shec.us/la.caltek.net swarm.
+- Backup loop hardened with `set -o pipefail` so a failed mariadb-dump can
+  no longer report OK via gzip's exit code.
+
+### Lessons
+- Never leave recovery flags (`--skip-grant-tables`) in stack definitions.
+- Backups must be logical dumps, verified by size and `zcat | head`.
+- In a pipeline, test the producer's exit status (`pipefail`), not the consumer's.
+- Anything public-facing runs under systemd or Docker restart policy — never nohup.
