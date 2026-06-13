@@ -9,7 +9,6 @@ volumes:
 services:
   db:
     image: postgres:18
-    container_name: o19l_db
     restart: unless-stopped
     environment:
       POSTGRES_DB: postgres
@@ -20,11 +19,13 @@ services:
     networks: [o19local]
   odoo:
     image: odoo:19
-    container_name: o19l_odoo
     restart: unless-stopped
     depends_on: [db]
     ports:
-      - "8069:8069"
+      - target: 8069
+        published: 8069
+        protocol: tcp
+        mode: host
     environment:
       HOST: db
       USER: odoo
