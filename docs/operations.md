@@ -109,3 +109,13 @@ All backups to that date were raw-file tars of the broken datadir — unusable.
 - Backups must be logical dumps, verified by size and `zcat | head`.
 - In a pipeline, test the producer's exit status (`pipefail`), not the consumer's.
 - Anything public-facing runs under systemd or Docker restart policy — never nohup.
+
+## OP-10 — Power failure recovery test (2026-06-13)
+**Result: PASS — full auto-recovery, no intervention required.**
+- /mnt/p4 mounted via fstab on boot ✓
+- All 10 containers restarted via unless-stopped/swarm ✓
+- cloudflared-exe tunnel auto-started via systemd ✓
+- Odoo 19 local (http://localhost:8069) ✓
+- Elgg (http://localhost:8086) ✓
+- exe.caltek.net tunnel ✓
+**This boot sequence is the replication target for all CTN nodes.**
