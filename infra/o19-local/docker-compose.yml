@@ -16,7 +16,7 @@ services:
       POSTGRES_USER: odoo
       POSTGRES_PASSWORD: "${ODOO_DB_PASSWORD}"
     volumes:
-      - 19l_db:/var/lib/postgresql/data
+      - 19l_db:/var/lib/postgresql
     networks: [o19local]
   odoo:
     image: odoo:19
