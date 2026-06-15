@@ -1,7 +1,573 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8">
-<title>CTN Index — index.localhost</title>
-<meta http-equiv="refresh" content="0;url=http://localhost/osgeolive/en/index.html">
-</head><body>
-<p>CTN Index loading... if this persists open <a href="http://elpx.localhost">elpx.localhost</a></p>
-</body></html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CTN Index — CalTekNet Local Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Space+Mono:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --y: #FFD500;
+  --b: #0E0D0B;
+  --br: #C9A84C;
+  --g: #1A1A18;
+  --dg: #0D0D0B;
+  --lg: #242422;
+  --mg: #333331;
+  --text: #D8D6D0;
+  --muted: #888880;
+  --dim: #444440;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--dg); color: var(--text); font-family: 'Crimson Pro', Georgia, serif; min-height: 100vh; }
+
+/* Header */
+#header {
+  background: var(--b);
+  border-bottom: 2px solid var(--y);
+  padding: 0 28px;
+  display: flex; align-items: stretch;
+  min-height: 64px;
+}
+.header-inner {
+  display: flex; justify-content: space-between; align-items: center;
+  width: 100%; max-width: 1200px; margin: 0 auto; gap: 20px;
+}
+.brand { display: flex; flex-direction: column; justify-content: center; }
+.brand-name {
+  font-family: 'Cinzel', serif; font-size: 22px; font-weight: 900;
+  color: var(--y); letter-spacing: 0.08em; line-height: 1;
+}
+.brand-name span { color: var(--br); }
+.brand-sub {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  color: var(--dim); letter-spacing: 0.18em; text-transform: uppercase;
+  margin-top: 4px;
+}
+.header-links { display: flex; gap: 8px; flex-wrap: wrap; }
+.hlink {
+  font-family: 'Space Mono', monospace; font-size: 10px; color: var(--br);
+  border: 1px solid var(--mg); padding: 4px 10px; border-radius: 4px;
+  text-decoration: none; transition: all .15s; white-space: nowrap;
+}
+.hlink:hover { border-color: var(--y); color: var(--y); }
+
+/* Status bar */
+#statusbar {
+  background: var(--g); border-bottom: 1px solid var(--mg);
+  padding: 8px 28px;
+}
+.statusbar-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; gap: 24px; flex-wrap: wrap; align-items: center;
+}
+.stat { display: flex; align-items: baseline; gap: 5px; }
+.stat-val { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 700; }
+.stat-label {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em;
+}
+
+/* Tabs */
+#tabs {
+  background: var(--g); border-bottom: 1px solid var(--mg);
+  padding: 10px 28px; position: sticky; top: 0; z-index: 100;
+}
+.tabs-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 6px; flex-wrap: wrap; }
+.tab {
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 5px; cursor: pointer;
+  border: 1px solid var(--mg); background: transparent; color: var(--muted);
+  transition: all .15s;
+}
+.tab:hover { color: var(--text); border-color: var(--br); }
+.tab.active { background: var(--y); color: var(--b); border-color: var(--y); }
+
+/* Content */
+#content { max-width: 1200px; margin: 0 auto; padding: 24px 28px; }
+.panel { display: none; }
+.panel.active { display: block; }
+
+.section-title {
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--y);
+  border-bottom: 1px solid var(--mg); padding-bottom: 8px; margin-bottom: 16px;
+}
+
+/* Cards */
+.card {
+  background: var(--lg); border: 1px solid var(--mg); border-radius: 8px;
+  padding: 13px 16px; margin-bottom: 8px;
+}
+.card-accent-y  { border-left: 3px solid var(--y); }
+.card-accent-br { border-left: 3px solid var(--br); }
+.card-accent-g  { border-left: 3px solid #4CAF50; }
+.card-accent-b  { border-left: 3px solid #2196F3; }
+.card-accent-p  { border-left: 3px solid #9C27B0; }
+.card-accent-o  { border-left: 3px solid #FF9800; }
+.card-accent-r  { border-left: 3px solid #FF5722; }
+
+.dot {
+  display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+  margin-right: 6px; flex-shrink: 0; vertical-align: middle;
+}
+.dot-live    { background: #4CAF50; }
+.dot-planned { background: #FF9800; }
+.dot-css     { background: #FF5722; }
+.dot-dns     { background: #9E9E9E; }
+.dot-staged  { background: #2196F3; }
+
+.badge {
+  font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+  padding: 2px 7px; border-radius: 3px; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--b); white-space: nowrap;
+}
+.badge-y  { background: var(--y); }
+.badge-br { background: var(--br); }
+.badge-g  { background: #4CAF50; }
+.badge-b  { background: #2196F3; }
+.badge-p  { background: #9C27B0; color: #fff; }
+.badge-o  { background: #FF9800; }
+.badge-r  { background: #FF5722; color: #fff; }
+
+.mono { font-family: 'Space Mono', monospace; }
+.row  { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.row-between { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+a { color: var(--br); text-decoration: none; }
+a:hover { color: var(--y); }
+
+pre, code {
+  font-family: 'Space Mono', monospace; font-size: 11px;
+  background: var(--dg); border-radius: 5px;
+}
+pre { padding: 12px 14px; overflow-x: auto; color: #4CAF50; margin-top: 8px; }
+code { padding: 1px 5px; color: var(--br); }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+@media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+
+/* xDevice cards */
+.xdev-card {
+  background: var(--lg); border: 1px solid var(--mg); border-radius: 8px;
+  padding: 13px 16px; cursor: pointer; transition: background .15s;
+}
+.xdev-card:hover { background: #1e1e1c; }
+.xdev-card.open  { background: #1a1a14; }
+.xdev-id { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 900; }
+.xdev-detail {
+  display: none; margin-top: 8px; background: var(--dg);
+  border-radius: 4px; padding: 8px 10px;
+  font-family: 'Space Mono', monospace; font-size: 10px; color: var(--br);
+}
+.xdev-card.open .xdev-detail { display: block; }
+
+/* Odoo flow */
+.flow-arrow { color: var(--dim); margin: 0 6px; }
+
+/* Footer */
+#footer {
+  border-top: 1px solid var(--mg); padding: 12px 28px; margin-top: 32px;
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+}
+.footer-inner span {
+  font-family: 'Space Mono', monospace; font-size: 9px; color: var(--dim);
+  letter-spacing: 0.08em;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-name">CTN <span>INDEX</span></div>
+      <div class="brand-sub">CalTekNet · Est. 1997 · kmw-20hgs0cl00 · OSGeoLive 17 · OP-10</div>
+    </div>
+    <div class="header-links">
+      <a class="hlink" href="http://elpx.localhost">↗ elpx</a>
+      <a class="hlink" href="http://exe.localhost">↗ exe</a>
+      <a class="hlink" href="http://odoo.localhost">↗ odoo</a>
+      <a class="hlink" href="http://elgg.localhost">↗ elgg</a>
+      <a class="hlink" href="http://vcap.localhost">↗ vcap</a>
+      <a class="hlink" href="http://localhost:9000">↗ portainer</a>
+      <a class="hlink" href="https://github.com/calteknet/osgeo17-vcap" target="_blank">↗ github</a>
+    </div>
+  </div>
+</div>
+
+<!-- STATUS BAR -->
+<div id="statusbar">
+  <div class="statusbar-inner">
+    <div class="stat"><span class="stat-val" style="color:var(--y)">7</span><span class="stat-label">local domains</span></div>
+    <div class="stat"><span class="stat-val" style="color:#4CAF50">5</span><span class="stat-label">live</span></div>
+    <div class="stat"><span class="stat-val" style="color:var(--br)">8</span><span class="stat-label">containers</span></div>
+    <div class="stat"><span class="stat-val" style="color:#9C27B0">8</span><span class="stat-label">xdevice types</span></div>
+    <div class="stat"><span class="stat-val" style="color:#FF9800">14</span><span class="stat-label">.elpx files</span></div>
+    <div class="stat"><span class="stat-val" style="color:#2196F3">6</span><span class="stat-label">odoo api links</span></div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div id="tabs">
+  <div class="tabs-inner">
+    <button class="tab active" onclick="showTab('domains')">Local Domains</button>
+    <button class="tab" onclick="showTab('ports')">Port Map</button>
+    <button class="tab" onclick="showTab('xdevices')">xDevices</button>
+    <button class="tab" onclick="showTab('odoo')">Odoo Hub</button>
+    <button class="tab" onclick="showTab('elpx')">elpx Library</button>
+    <button class="tab" onclick="showTab('osgeo')">OSGeo Apps</button>
+    <button class="tab" onclick="showTab('ops')">Ops Log</button>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div id="content">
+
+  <!-- LOCAL DOMAINS -->
+  <div id="panel-domains" class="panel active">
+    <div class="section-title">Local Domain Registry — Apache OP-10</div>
+
+    <div class="card card-accent-y" style="margin-bottom:14px">
+      <div class="mono" style="font-size:11px;color:var(--muted)">
+        Config: <code>/etc/apache2/sites-available/ctn-local.conf</code> →
+        <a href="https://github.com/calteknet/osgeo17-vcap/blob/main/config/apache/ctn-local.conf" target="_blank">osgeo17-vcap/config/apache/</a>
+      </div>
+    </div>
+
+    <div id="domain-cards"></div>
+  </div>
+
+  <!-- PORT MAP -->
+  <div id="panel-ports" class="panel">
+    <div class="section-title">Container Port Map — kmw-20hgs0cl00</div>
+    <div class="card card-accent-br" style="margin-bottom:14px">
+<pre>docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+sudo ss -tlnp | grep -E ':80|:84|:86|:69|:85|:90'</pre>
+    </div>
+    <div id="port-cards"></div>
+  </div>
+
+  <!-- XDEVICES -->
+  <div id="panel-xdevices" class="panel">
+    <div class="section-title">xDevice Architecture — Composable Content Units</div>
+    <div class="card card-accent-y" style="margin-bottom:14px">
+      <p style="font-size:14px;line-height:1.6">
+        Every platform exposes embeddable, composable content units.
+        <code>elpx.localhost</code> is the switchboard that assembles them.
+        <code>odoo.localhost</code> is the API hub. Click any card to expand.
+      </p>
+    </div>
+    <div class="grid2" id="xdev-cards"></div>
+  </div>
+
+  <!-- ODOO HUB -->
+  <div id="panel-odoo" class="panel">
+    <div class="section-title">Odoo Frontend API Hub — odoo.localhost</div>
+    <div class="card card-accent-p" style="margin-bottom:14px">
+      <p style="font-size:14px;line-height:1.6;margin-bottom:6px">
+        <strong style="color:var(--y);font-family:'Space Mono',monospace">odoo.localhost</strong>
+        is the central API layer. Odoo 19 CE website builder is the public frontend;
+        all other local services are embedded targets or API consumers.
+      </p>
+    </div>
+    <div id="odoo-cards"></div>
+    <div class="card card-accent-y" style="margin-top:14px">
+      <div class="mono" style="font-size:10px;color:var(--y);margin-bottom:8px">
+        OP-11 NEXT: add index.localhost vhost to Apache
+      </div>
+<pre style="color:var(--br)">&lt;VirtualHost *:80&gt;
+    ServerName index.localhost
+    DocumentRoot /home/kmw/osgeo17-vcap/dashboard
+    &lt;Directory /home/kmw/osgeo17-vcap/dashboard&gt;
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;</pre>
+    </div>
+  </div>
+
+  <!-- ELPX LIBRARY -->
+  <div id="panel-elpx" class="panel">
+    <div class="section-title">CTN .elpx Library — 14 packages</div>
+    <div class="row" style="gap:6px;margin-bottom:14px;flex-wrap:wrap" id="elpx-filters"></div>
+    <div id="elpx-cards"></div>
+  </div>
+
+  <!-- OSGEO APPS -->
+  <div id="panel-osgeo" class="panel">
+    <div class="section-title">OSGeoLive 17 Application Inventory</div>
+    <div id="osgeo-cards"></div>
+  </div>
+
+  <!-- OPS LOG -->
+  <div id="panel-ops" class="panel">
+    <div class="section-title">Operations Log — osgeo17-vcap</div>
+    <div id="ops-cards"></div>
+  </div>
+
+</div><!-- /content -->
+
+<!-- FOOTER -->
+<div id="footer">
+  <div class="footer-inner">
+    <span>CTN Index · index.localhost · github.com/calteknet/osgeo17-vcap · June 2026</span>
+    <span>Kenneth Wyrick · CalTekNet · OP-09 + OP-10 committed</span>
+  </div>
+</div>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────────────
+const DOMAINS = [
+  { sub:"index",  url:"http://index.localhost",  service:"CTN Index Dashboard",  stack:"apache/static",        status:"live",     note:"This dashboard — master hub. Served from /home/kmw/osgeo17-vcap/dashboard/" },
+  { sub:"elpx",   url:"http://elpx.localhost",   service:"eXeLearning",          stack:"exe-local",            status:"live",     note:"Primary .elpx authoring → :8084" },
+  { sub:"exe",    url:"http://exe.localhost",     service:"eXeLearning (alias)",  stack:"exe-local",            status:"live",     note:"Alias for elpx.localhost" },
+  { sub:"odoo",   url:"http://odoo.localhost",   service:"Odoo 19 CE",           stack:"o19-local (Swarm)",    status:"live",     note:"Frontend API hub — connects all services → :8069" },
+  { sub:"elgg",   url:"http://elgg.localhost",   service:"Elgg Community",       stack:"live-osgoe-ctn-vcap",  status:"css",      note:"DB recovered; CSS cache needs flush → :8086" },
+  { sub:"vcap",   url:"http://vcap.localhost",   service:"VCAP Slides",          stack:"vcap-slides",          status:"live",     note:"nginx HTML export viewer → :8085" },
+  { sub:"class",  url:"http://class.localhost",  service:"Moodle/Kolibri",       stack:"—",                    status:"planned",  note:"Placeholder until Moodle stack deployed" },
+];
+
+const PORTS = [
+  { port:80,   service:"Apache2 + CTN vhosts", container:"(host)",           stack:"OSGeoLive + OP-10",     status:"live" },
+  { port:8084, service:"eXeLearning",          container:"exelearning",       stack:"exe-local",             status:"live" },
+  { port:8069, service:"Odoo 19 CE",           container:"o19-local_odoo",    stack:"o19-local (Swarm)",     status:"live" },
+  { port:8086, service:"Elgg + nginx",         container:"elgg_nginx",        stack:"live-osgoe-ctn-vcap",   status:"css" },
+  { port:8085, service:"VCAP Slides",          container:"vcap_slides",       stack:"vcap-slides",           status:"live" },
+  { port:9000, service:"Portainer CE",         container:"portainer",         stack:"standalone",            status:"live" },
+  { port:8090, service:"Traefik dashboard",    container:"traefik",           stack:"standalone",            status:"live" },
+  { port:5432, service:"PostgreSQL/PostGIS",   container:"o19-local_db",      stack:"o19-local (Swarm)",     status:"live" },
+];
+
+const XDEVICES = [
+  { id:"iDevice", platform:"eXeLearning", color:"#FFD500", desc:"Curriculum content block — text, media, quiz, game, embed. Native eXeLearning composable unit.", example:"External Web · Form · Case Study · A-Z Quiz · Checklist · True/False" },
+  { id:"oDevice", platform:"Odoo",        color:"#9C27B0", desc:"Odoo portal/website widget — jobs listings, surveys, events, eCommerce, CRM intake forms.", example:"/jobs · /survey · /event · Website Builder blocks · Portal widgets" },
+  { id:"eDevice", platform:"Elgg",        color:"#2196F3", desc:"Elgg plugin widget — activity feed, group content, user profile block, community blog.", example:"Group widget · River embed · Profile plugin · Discussion thread" },
+  { id:"lDevice", platform:"LRS/Moodle",  color:"#4CAF50", desc:"Learning record / xAPI statement — completion, score, interaction logged to Learning Record Store.", example:"xAPI: completed · passed · experienced · progressed · answered" },
+  { id:"uDevice", platform:"Ushahidi",    color:"#FF5722", desc:"Ushahidi survey/map embed — community data collection, incident mapping, needs assessment.", example:"ctn.ushahidi.io form · Map tile · Survey result · Incident layer" },
+  { id:"cDevice", platform:"Claude API",  color:"#C9A84C", desc:"Claude AI prompt block — AI-powered artifact embedded in curriculum or dashboard page.", example:"This dashboard · Quiz generator · Content assistant · Field-map tool" },
+  { id:"gDevice", platform:"GitHub API",  color:"#E91E63", desc:"GitHub API block — live repo status, commit log, .elpx version control, webhook trigger.", example:"github.com/calteknet/osgeo17-vcap · commit feed · file browser" },
+  { id:"vDevice", platform:"OSGeo/VCAP",  color:"#00BCD4", desc:"OSGeoLive/VCAP geo embed — QGIS map, GeoServer tile, PostGIS query result, spatial layer.", example:"WMS tile · Feature layer · PostGIS query · QGIS print layout" },
+];
+
+const ODOO_LINKS = [
+  { to:"exe.localhost",   method:"iframe + REST", desc:"Jobs → .elpx generator; survey → eXe form iDevice; Odoo events → curriculum content trigger" },
+  { to:"elgg.localhost",  method:"OAuth + REST",  desc:"Odoo contacts ↔ Elgg users; Discuss channel ↔ Elgg group; Portal login → community membership" },
+  { to:"vcap.localhost",  method:"iframe embed",  desc:"Odoo website builder embeds VCAP slides via External Content block on any website page" },
+  { to:"class.localhost", method:"LTI / REST",    desc:"Odoo eLearning → Moodle SCORM upload; course completion → Odoo employee training record" },
+  { to:"GitHub API",      method:"webhook",       desc:"Odoo project task → GitHub issue; .elpx commit → Portainer webhook → auto-redeploy stack" },
+  { to:"Ushahidi",        method:"REST embed",    desc:"Odoo survey results → Ushahidi incident map; community needs data → Odoo CRM contact record" },
+];
+
+const ELPX = [
+  { id:"ctn-master-index",                    title:"CTN Master Index",            pages:10, size:"641K",  status:"active",  tier:"master",      desc:"People · Infrastructure · Programs · Curriculum · Civic · Geography · Terminology" },
+  { id:"ctn-exelearning-idevices-environment", title:"CTN iDevices Environment",    pages:22, size:"1.5M", status:"active",  tier:"reference",   desc:"Full iDevice reference — all 6 categories documented with examples" },
+  { id:"vcap-chapter-8",                      title:"VCAP Chapter 8",              pages:9,  size:"1.1M", status:"active",  tier:"curriculum",  desc:"Community Technology Sovereignty — 8-week framework" },
+  { id:"a-wellness-framework-v2",             title:"DRESSS Wellness v2",           pages:12, size:"542K", status:"active",  tier:"program",     desc:"Diet · Reduce Stress · Exercise · Sleep · Supplements · Sexual Wellness" },
+  { id:"exelearning-cms-architecture",        title:"CMS Architecture",             pages:1,  size:"1.1M", status:"active",  tier:"devops",      desc:"Local + Portainer deployment — Docker, Cloudflare, .elpx pipeline" },
+  { id:"idevice-how-to-manual-en-es",        title:"iDevice Manual EN/ES",          pages:1,  size:"1.1M", status:"active",  tier:"reference",   desc:"Bilingual iDevice authoring guide — English / Spanish" },
+  { id:"information-and-presentation",       title:"Information & Presentation",    pages:1,  size:"1.2M", status:"active",  tier:"idevice-cat", desc:"Text blocks · image galleries · media embeds · accordion · UDL" },
+  { id:"assessment-and-tracking",            title:"Assessment & Tracking",         pages:1,  size:"1.1M", status:"active",  tier:"idevice-cat", desc:"Forms · quizzes · rubrics · checklists · progress reports" },
+  { id:"interactive-activities",             title:"Interactive Activities",         pages:1,  size:"1.1M", status:"active",  tier:"idevice-cat", desc:"Case studies · UoL projects · SWOT · scenarios · reflections" },
+  { id:"science",                            title:"Science",                        pages:1,  size:"1.1M", status:"active",  tier:"idevice-cat", desc:"GIS inquiry · lab reports · field observations · data collection" },
+  { id:"games",                              title:"Games",                          pages:1,  size:"1.2M", status:"active",  tier:"idevice-cat", desc:"A-Z Quiz · crossword · word search · matching pairs" },
+  { id:"career-food-beverage",              title:"Career: Food & Beverage",         pages:6,  size:"—",   status:"planned", tier:"curriculum",  desc:"Levels 1–3 certification pathway — ServSafe/ANSI" },
+  { id:"career-cte-vcap",                   title:"Career: CTE/VCAP Entrepreneur",  pages:0,  size:"—",   status:"planned", tier:"curriculum",  desc:"Levels 4–7 entrepreneur track — VCAP methodology" },
+  { id:"abjs-sofi-volunteer",               title:"ABJS SoFi Volunteer Onboarding", pages:0,  size:"—",   status:"planned", tier:"program",     desc:"FIFA World Cup 2026 — jobs, time dollar timebanking, xAPI" },
+];
+
+const OSGEO_CATS = [
+  { cat:"Desktop GIS",       apps:["QGIS","GRASS GIS","gvSIG","OpenJUMP","SAGA"] },
+  { cat:"Web GIS / Server",  apps:["GeoServer","MapServer","Mapbender","GeoNode","pycsw","GeoMoose"] },
+  { cat:"Geospatial DB",     apps:["PostGIS / PostgreSQL","SpatiaLite","pgRouting","Rasdaman"] },
+  { cat:"Navigation & Maps", apps:["OpenStreetMap","OpenLayers","Leaflet","Cesium"] },
+  { cat:"Remote Sensing",    apps:["GDAL/OGR","Orfeo Toolbox","OSSIM","PDAL"] },
+  { cat:"Python / Science",  apps:["Jupyter","NumPy","GeoPandas","Shapely","Fiona","Rasterio"] },
+  { cat:"3D & Community",    apps:["osgEarth","Ushahidi","OpenDroneMap"] },
+  { cat:"Local Servers",     apps:["Apache2","Tomcat","PostgreSQL","NGINX","Redis"] },
+];
+
+const OPS_LOG = [
+  { op:"OP-01", title:"Fresh OSGeoLive 17 install",           date:"2026-06-01", note:"nvme0n1p5 install, p4 persistence, hostname kmw-20hgs0cl00" },
+  { op:"OP-02", title:"GitHub repo init",                     date:"2026-06-01", note:"github.com/calteknet/osgeo17-vcap created, push access confirmed" },
+  { op:"OP-03", title:"exe.caltek.net Cloudflare tunnel",     date:"2026-06-01", note:"Tunnel e7fbc420, credentials on nvme0n1p4" },
+  { op:"OP-04", title:"eXeLearning container deploy",         date:"2026-06-01", note:"Port 8084→8080, /mnt/p4/elpx volume" },
+  { op:"OP-05", title:"vcap-slides stack deploy",             date:"2026-06-07", note:"nginx on :8085, HTML exports from /home/kmw/vcap/slides/" },
+  { op:"OP-06", title:"live-osgoe-ctn-vcap Elgg stack",      date:"2026-06-01", note:"MariaDB crash-loop — skip-grant-tables flag found and removed" },
+  { op:"OP-07", title:"Elgg MariaDB volume recovery",         date:"2026-06-10", note:"docker volume rm, clean redeploy, DB initialised" },
+  { op:"OP-08", title:"o19-local Odoo 19 CE (Swarm)",         date:"2026-06-13", note:"postgres:18, port 8069, swarm stack on local node" },
+  { op:"OP-09", title:"exe-local stack documented",           date:"2026-06-15", note:"stacks/exe-local/docker-compose.yml committed, port 8084 confirmed" },
+  { op:"OP-10", title:"Apache CTN localhost vhosts",          date:"2026-06-15", note:"elpx/exe/odoo/elgg/vcap/class.localhost — a2enmod proxy, proxy_http, proxy_wstunnel" },
+  { op:"OP-11", title:"index.localhost — CTN dashboard",      date:"2026-06-15", note:"PENDING: add vhost + deploy index.html to /dashboard/", pending:true },
+];
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+const STATUS_DOT = { live:"dot-live", planned:"dot-planned", css:"dot-css", staged:"dot-staged" };
+const STATUS_BADGE = {
+  live:"badge-g", planned:"badge-o", css:"badge-r", staged:"badge-b"
+};
+const TIER_BADGE = {
+  master:"badge-y", reference:"badge-br", curriculum:"badge-g",
+  program:"badge-b", devops:"badge-p", "idevice-cat":"badge-o"
+};
+const TIER_ACCENT = {
+  master:"card-accent-y", reference:"card-accent-br", curriculum:"card-accent-g",
+  program:"card-accent-b", devops:"card-accent-p", "idevice-cat":"card-accent-o"
+};
+
+function showTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function toggleXdev(el) {
+  el.classList.toggle('open');
+}
+
+// ── Render domains ────────────────────────────────────────────────────────────
+const dc = document.getElementById('domain-cards');
+DOMAINS.forEach(d => {
+  dc.innerHTML += `
+  <div class="card ${d.status==='live'?'card-accent-g':d.status==='planned'?'card-accent-o':'card-accent-r'}">
+    <div class="row-between">
+      <div class="row">
+        <span class="dot ${STATUS_DOT[d.status]||'dot-dns'}"></span>
+        <a href="${d.url}" class="mono" style="font-size:14px;font-weight:700;color:var(--y)">${d.url}</a>
+      </div>
+      <div class="row">
+        <span class="badge ${STATUS_BADGE[d.status]||'badge-br'}">${d.status}</span>
+      </div>
+    </div>
+    <div style="margin:6px 0 0 22px;display:grid;grid-template-columns:1fr 1fr;gap:4px">
+      <span style="font-size:13px">${d.service}</span>
+      <span style="font-size:12px;color:var(--muted)">stack: <code>${d.stack}</code></span>
+      <span style="font-size:12px;color:var(--muted);grid-column:1/-1">${d.note}</span>
+    </div>
+  </div>`;
+});
+
+// ── Render ports ──────────────────────────────────────────────────────────────
+const pc = document.getElementById('port-cards');
+PORTS.forEach(p => {
+  pc.innerHTML += `
+  <div class="card ${p.status==='live'?'card-accent-g':'card-accent-r'}">
+    <div class="row-between">
+      <div class="row">
+        <span class="dot ${STATUS_DOT[p.status]||'dot-dns'}"></span>
+        <span class="mono" style="font-size:16px;font-weight:700;color:var(--y)">:${p.port}</span>
+        <span style="font-size:13px">${p.service}</span>
+      </div>
+      <span class="badge badge-br">${p.stack}</span>
+    </div>
+    <div style="margin:4px 0 0 22px"><code>${p.container}</code></div>
+  </div>`;
+});
+
+// ── Render xdevices ───────────────────────────────────────────────────────────
+const xc = document.getElementById('xdev-cards');
+XDEVICES.forEach(x => {
+  xc.innerHTML += `
+  <div class="xdev-card" onclick="this.classList.toggle('open')" style="border-left:3px solid ${x.color}">
+    <div class="row-between">
+      <span class="xdev-id" style="color:${x.color}">${x.id}</span>
+      <span class="badge" style="background:${x.color};color:#0E0D0B">${x.platform}</span>
+    </div>
+    <p style="margin:6px 0 0;font-size:13px;line-height:1.5;color:var(--text)">${x.desc}</p>
+    <div class="xdev-detail">EXAMPLES: ${x.example}</div>
+  </div>`;
+});
+
+// ── Render odoo hub ───────────────────────────────────────────────────────────
+const oc = document.getElementById('odoo-cards');
+ODOO_LINKS.forEach(l => {
+  oc.innerHTML += `
+  <div class="card card-accent-p">
+    <div class="row" style="margin-bottom:6px">
+      <code style="color:var(--y)">odoo.localhost</code>
+      <span class="flow-arrow">→</span>
+      <code style="color:var(--br)">${l.to}</code>
+      <span class="badge badge-p">${l.method}</span>
+    </div>
+    <p style="font-size:13px;line-height:1.5;color:var(--muted)">${l.desc}</p>
+  </div>`;
+});
+
+// ── Render elpx ───────────────────────────────────────────────────────────────
+const tiers = ['all','master','reference','curriculum','program','devops','idevice-cat'];
+const ef = document.getElementById('elpx-filters');
+tiers.forEach(t => {
+  ef.innerHTML += `<button class="tab ${t==='all'?'active':''}" onclick="filterElpx('${t}',this)">${t}</button>`;
+});
+
+function filterElpx(tier, btn) {
+  document.querySelectorAll('#elpx-filters .tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderElpx(tier);
+}
+
+function renderElpx(tier) {
+  const ec = document.getElementById('elpx-cards');
+  const shown = tier==='all' ? ELPX : ELPX.filter(e=>e.tier===tier);
+  ec.innerHTML = '';
+  shown.forEach(e => {
+    ec.innerHTML += `
+    <div class="card ${TIER_ACCENT[e.tier]||'card-accent-br'}" style="margin-bottom:8px">
+      <div class="row-between">
+        <div class="row">
+          <span class="dot ${e.status==='active'?'dot-live':'dot-planned'}"></span>
+          <span class="mono" style="font-size:12px;font-weight:700;color:var(--y)">${e.title}</span>
+          <span style="font-size:11px;color:var(--dim)">${e.pages}pp · ${e.size}</span>
+        </div>
+        <div class="row">
+          <span class="badge ${TIER_BADGE[e.tier]||'badge-br'}">${e.tier}</span>
+          ${e.status==='active'?`<a href="http://elpx.localhost/${e.id}/" class="mono" style="font-size:10px">→ open</a>`:''}
+        </div>
+      </div>
+      <p style="margin:5px 0 0 22px;font-size:13px;color:var(--muted)">${e.desc}</p>
+    </div>`;
+  });
+}
+renderElpx('all');
+
+// ── Render osgeo ──────────────────────────────────────────────────────────────
+const gc = document.getElementById('osgeo-cards');
+OSGEO_CATS.forEach(cat => {
+  gc.innerHTML += `
+  <div class="card card-accent-br" style="margin-bottom:8px">
+    <div class="row-between" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'flex':'none'" style="cursor:pointer">
+      <span class="mono" style="font-size:12px;font-weight:700;color:var(--y)">${cat.cat}</span>
+      <span style="font-size:11px;color:var(--dim)">${cat.apps.length} apps ▾</span>
+    </div>
+    <div style="display:none;flex-wrap:wrap;gap:6px;margin-top:10px">
+      ${cat.apps.map(a=>`<span class="badge badge-br" style="background:var(--dg);color:var(--text);border:1px solid var(--mg)">${a}</span>`).join('')}
+    </div>
+  </div>`;
+});
+
+// ── Render ops log ────────────────────────────────────────────────────────────
+const lc = document.getElementById('ops-cards');
+OPS_LOG.slice().reverse().forEach(op => {
+  lc.innerHTML += `
+  <div class="card ${op.pending?'card-accent-o':'card-accent-g'}" style="margin-bottom:8px">
+    <div class="row-between">
+      <div class="row">
+        <span class="badge ${op.pending?'badge-o':'badge-g'}">${op.op}</span>
+        <span class="mono" style="font-size:12px;font-weight:700;color:${op.pending?'#FF9800':'var(--y)'}">${op.title}</span>
+      </div>
+      <span class="mono" style="font-size:10px;color:var(--dim)">${op.date}</span>
+    </div>
+    <p style="margin:5px 0 0 22px;font-size:13px;color:var(--muted)">${op.note}</p>
+  </div>`;
+});
+</script>
+</body>
+</html>
