@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  exelearning:
+    image: exelearning/exelearning:latest
+    container_name: exelearning
+    restart: unless-stopped
+    ports:
+      - "8084:8080"
+    volumes:
+      - /mnt/p4/elpx:/data/elpx
+      - /mnt/p4/exports:/data/exports
+    networks:
+      - exe-net
+networks:
+  exe-net:
+    driver: bridge
