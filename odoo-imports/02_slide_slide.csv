@@ -1,0 +1,9 @@
+id,channel_id/id,name,slide_category,url,sequence,is_published
+ctn.sl_vcap_01,ctn.ch_vcap_master,Welcome & Course Overview,document,https://caltek.net/slides/index.html,1,True
+ctn.sl_vcap_02,ctn.ch_vcap_master,What is VCAP / Nomadic Classroom,document,https://caltek.net/slides/vcap-overview.html,2,True
+ctn.sl_vcap_03,ctn.ch_vcap_master,OSGeoLive 17 Platform Tour,document,https://caltek.net/slides/osgeolive-tour.html,3,True
+ctn.sl_vcap_04,ctn.ch_vcap_master,CTN Workflow: eXe → Moodle → Odoo,document,https://caltek.net/slides/ctn-workflow.html,4,True
+ctn.sl_vcap_05,ctn.ch_vcap_master,Interactive Activities,document,https://caltek.net/slides/activities.html,5,True
+ctn.sl_vcap_06,ctn.ch_vcap_master,VCAP Case Study: STEM54,document,https://caltek.net/slides/stem54-case-study.html,6,True
+ctn.sl_vcap_07,ctn.ch_vcap_master,Docker / Portainer Stack Basics,document,https://caltek.net/slides/portainer-basics.html,7,True
+ctn.sl_vcap_08,ctn.ch_vcap_master,A-Z Quiz (assessment),quiz,,8,True

@@ -1,0 +1,142 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# Stack: ctn-local
+# Deploy: Portainer → Add Stack → name: ctn-local
+# Traefik entrypoint: web → :81
+# Access all services via http://*.localhost:81  OR add :81 to /etc/hosts entries
+# Commit: github.com/calteknet/osgeo17-vcap/stacks/ctn-local/docker-compose.yml
+# ═══════════════════════════════════════════════════════════════════════════════
+
+version: "3.8"
+
+networks:
+  ctn-net:
+    driver: bridge
+    attachable: true
+
+volumes:
+  elgg_data:
+  elgg_db:
+  elgg_backup:
+  elpx_data:
+  elpx_exports:
+
+services:
+
+  # ── INDEX DASHBOARD ──────────────────────────────────────────────────────────
+  ctn-index:
+    image: nginx:alpine
+    container_name: ctn-index
+    restart: unless-stopped
+    volumes:
+      - /home/kmw/osgeo17-vcap/dashboard:/usr/share/nginx/html:ro
+    networks: [ctn-net]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ctn-index.rule=Host(`index.localhost`)"
+      - "traefik.http.routers.ctn-index.entrypoints=web"
+      - "traefik.http.services.ctn-index.loadbalancer.server.port=80"
+
+  # ── EXELEARNING ──────────────────────────────────────────────────────────────
+  exelearning:
+    image: exelearning/exelearning:latest
+    container_name: exelearning
+    restart: unless-stopped
+    volumes:
+      - /mnt/p4/elpx:/data/elpx
+      - /mnt/p4/exports:/data/exports
+    networks: [ctn-net]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.exe.rule=Host(`exe.localhost`) || Host(`elpx.localhost`)"
+      - "traefik.http.routers.exe.entrypoints=web"
+      - "traefik.http.services.exe.loadbalancer.server.port=8080"
+
+  # ── VCAP SLIDES ──────────────────────────────────────────────────────────────
+  vcap-slides:
+    image: nginx:alpine
+    container_name: vcap_slides
+    restart: unless-stopped
+    volumes:
+      - /home/kmw/vcap/slides:/usr/share/nginx/html:ro
+    networks: [ctn-net]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vcap.rule=Host(`vcap.localhost`)"
+      - "traefik.http.routers.vcap.entrypoints=web"
+      - "traefik.http.services.vcap.loadbalancer.server.port=80"
+
+  # ── ELGG COMMUNITY ───────────────────────────────────────────────────────────
+  elgg_db:
+    image: mariadb:11.4
+    container_name: elgg_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: "${ELGG_DB_ROOT_PASSWORD}"
+      MYSQL_DATABASE: elgg
+      MYSQL_USER: elgg
+      MYSQL_PASSWORD: "${ELGG_DB_PASSWORD}"
+    volumes:
+      - elgg_db:/var/lib/mysql
+    networks: [ctn-net]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  elgg_backup:
+    image: mariadb:11.4
+    container_name: elgg_backup
+    restart: unless-stopped
+    depends_on:
+      elgg_db:
+        condition: service_healthy
+    environment:
+      MYSQL_PWD: "${ELGG_DB_ROOT_PASSWORD}"
+    volumes:
+      - elgg_backup:/backups
+    networks: [ctn-net]
+    entrypoint: |
+      sh -c 'while true; do
+        mariadb-dump -h elgg_db -u root elgg --single-transaction \
+          > /backups/elgg_$$(date +%Y%m%d_%H%M%S).sql
+        find /backups -name "*.sql" -mtime +14 -delete
+        sleep 86400
+      done'
+
+  elgg_web:
+    image: elgg/elgg:latest
+    container_name: elgg_nginx
+    restart: unless-stopped
+    depends_on:
+      elgg_db:
+        condition: service_healthy
+    environment:
+      ELGG_DB_HOST: elgg_db
+      ELGG_DB_NAME: elgg
+      ELGG_DB_USER: elgg
+      ELGG_DB_PASSWORD: "${ELGG_DB_PASSWORD}"
+      ELGG_SITE_URL: "http://elgg.localhost:81"
+    volumes:
+      - elgg_data:/var/www/html/elgg-data
+    networks: [ctn-net]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.elgg.rule=Host(`elgg.localhost`)"
+      - "traefik.http.routers.elgg.entrypoints=web"
+      - "traefik.http.services.elgg.loadbalancer.server.port=80"
+
+  # ── CLASS PLACEHOLDER (Moodle/Kolibri) ───────────────────────────────────────
+  ctn-class:
+    image: nginx:alpine
+    container_name: ctn_class
+    restart: unless-stopped
+    volumes:
+      - /home/kmw/osgeo17-vcap/dashboard/class-placeholder.html:/usr/share/nginx/html/index.html:ro
+    networks: [ctn-net]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.class.rule=Host(`class.localhost`)"
+      - "traefik.http.routers.class.entrypoints=web"
+      - "traefik.http.services.ctn-class.loadbalancer.server.port=80"
+

@@ -1,0 +1,9 @@
+id,name,description
+ctn.prj_timebank,CTN TimeBanking on Odoo 19,"Edgar Cahn model; T$ as foreign currency via OCA accounting; interop with ASNTB/Community Weaver (Boyle Heights admin)"
+ctn.prj_erider_navigator,eRider + Digital Navigator + LA City + CTN 17,"Integrated architecture initiative"
+ctn.prj_kaos,KAOS Network Media Conservation,"Ben Caldwell; Saturdays + last-Sunday ArtsWalk monthly; documentation/preservation/conservation/distribution"
+ctn.prj_wong,Dr. Wong DRESSS Engagement,"Tri-fold, AO Scan, podcast runsheet; sandbox apps at 18.caltek.net/apps"
+ctn.prj_stem54_aqua,STEM54 Aquaponics / ZipGrow,"Dr. Batie nonprofit + workshops; Bazetti/Celeste King LAUSD tilapia files; 700+ ZipGrow towers; Louise Manuel hillside site"
+ctn.prj_allensworth_hh,Allensworth Hip-Hop Racism Awareness Gathering,"Rev. Washington + Silky D; Allensworth State Park; 501(c)(3) capture -> nonprofit intake pool"
+ctn.prj_archive_catalog,Media Archive Cataloging,"archive.org/details/@kwyrick + o.caltek.net Omeka + Scribus + family photo scanning station"
+ctn.prj_ctn_index,CTN Master Index — caltek.net Dynasty,"exe, pb, stem54, kaos, lausd subdomains; vcap.club, dronecap.net, shec.us/.me, sada55.net, bsius.net; Sam Scully collab"

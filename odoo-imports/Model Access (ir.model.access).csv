@@ -1,0 +1,6 @@
+"id","name","model_id","group_id","perm_read","perm_write","perm_create","perm_unlink"
+"base.access_res_users_apikeys_description_portal","API key wizard","API Key Description","Role / Portal","True","","True",""
+"base.access_res_users_apikeys_description_employee","API key wizard employees","API Key Description","Role / User","True","","True",""
+"base.access_res_users_apikeys_show_employee","API key result employees","Show API Key","Role / User","True","","True",""
+"base.access_res_users_apikeys_access_portal","API keys access portal","Users API Keys","Role / Portal","True","","",""
+"base.access_res_users_apikeys_access_employee","API keys access employees","Users API Keys","Role / User","True","","",""

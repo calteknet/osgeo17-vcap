@@ -1,0 +1,6 @@
+id,survey_id/id,title,question_type,sequence
+ctn.q_az_a,ctn.sv_vcap_az,A is for… (Apache / open web serving),simple_choice,1
+ctn.q_az_b,ctn.sv_vcap_az,B is for… (Bash / the command line),simple_choice,2
+ctn.q_az_c,ctn.sv_vcap_az,C is for… (Containers / Docker),simple_choice,3
+ctn.q_az_d,ctn.sv_vcap_az,D is for… (Data persistence / volumes),simple_choice,4
+ctn.q_az_e,ctn.sv_vcap_az,E is for… (eXeLearning authoring),simple_choice,5

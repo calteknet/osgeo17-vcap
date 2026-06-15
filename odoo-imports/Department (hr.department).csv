@@ -1,0 +1,5 @@
+"id","color","company_id","name","manager_id","parent_id"
+"hr.dep_administration","0","CalTekNet","Administration","",""
+"__export__.hr_department_3_6c519101","5","CalTekNet","Enterprise Resource Planning","Kenneth Wyrick","Information Communication Technology"
+"__export__.hr_department_4_97ec4270","10","CalTekNet","Geographical Information Systems","Kenneth Wyrick","Information Communication Technology"
+"__export__.hr_department_2_d6b37ed2","1","CalTekNet","Information Communication Technology","Kenneth Wyrick",""

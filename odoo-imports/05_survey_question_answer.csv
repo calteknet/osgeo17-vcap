@@ -1,0 +1,11 @@
+id,question_id/id,value,is_correct,answer_score
+ctn.a_az_a1,ctn.q_az_a,A web server that delivers HTML pages,True,1
+ctn.a_az_a2,ctn.q_az_a,A type of helicopter,False,0
+ctn.a_az_b1,ctn.q_az_b,A shell for typing commands to Linux,True,1
+ctn.a_az_b2,ctn.q_az_b,A celebration,False,0
+ctn.a_az_c1,ctn.q_az_c,Isolated packaged applications,True,1
+ctn.a_az_c2,ctn.q_az_c,Tupperware,False,0
+ctn.a_az_d1,ctn.q_az_d,Named Docker volumes on /mnt/p4,True,1
+ctn.a_az_d2,ctn.q_az_d,Writing data on paper,False,0
+ctn.a_az_e1,ctn.q_az_e,Open-source tool for authoring .elpx course packages,True,1
+ctn.a_az_e2,ctn.q_az_e,A spreadsheet program,False,0

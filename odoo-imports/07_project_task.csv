@@ -1,0 +1,12 @@
+id,project_id/id,name,date_deadline,description
+ctn.tk_imports_finish,ctn.prj_19_incubator,Finish CSV imports 02-05 (Content/Surveys list views),2026-06-12,"Gear icon > Import records from list view"
+ctn.tk_19_deploy,ctn.prj_19_incubator,Deploy 19.caltek.net stack via Portainer,2026-06-15,"BLOCKED on decision: pin to 48gb or shec.us"
+ctn.tk_19_timebank_cfg,ctn.prj_timebank,Configure T$ currency + chart of accounts,2026-06-22,"OCA account-financial-reporting; mirrors FIFA volunteer T$ design"
+ctn.tk_asntb_interop,ctn.prj_timebank,Map ASNTB Community Weaver export to Odoo import,2026-06-30,"Keep ASNTB membership; Odoo = CTN internal ledger"
+ctn.tk_batie_mtg,ctn.prj_stem54_aqua,Meet Dr. Batie at STEM54 — nonprofit + workshop plan,2026-06-12,"Today"
+ctn.tk_tilapia_files,ctn.prj_stem54_aqua,Review Bazetti/King LAUSD aquaponics files (10+),2026-06-16,"tilapia pricing.zip already in ~/Downloads"
+ctn.tk_wong_trifold,ctn.prj_wong,Print/refresh DRESSS tri-fold for Saturday,2026-06-13,"DRESSS guide + podcast runsheet exist from Vegas-trip session"
+ctn.tk_kaos_sat,ctn.prj_kaos,First KAOS Saturday session — define conservation workflow,2026-06-13,""
+ctn.tk_archive_plan,ctn.prj_archive_catalog,Catalog plan: archive.org collection -> Omeka items,2026-06-26,""
+ctn.tk_scully_call,ctn.prj_ctn_index,Follow-up call with Sam Scully — collaboration scope,2026-06-19,""
+ctn.tk_index_elpx,ctn.prj_ctn_index,Load ctn-master-index.elpx into exe.caltek.net,2026-06-18,"docker cp into exelearning container"
