@@ -1,0 +1,20 @@
+# vcap-slides — VCAP HTML slide viewer · CTN VCAP (OSGeoLive 17)
+# Repo: github.com/calteknet/osgeo17-vcap · Managed via Portainer
+# Host content: /mnt/p4/home/kmw/vcap/slides
+version: '3.8'
+networks:
+  vcap_net:
+    external: true
+    name: vcap_net
+services:
+  slides:
+    image: nginx:stable
+    container_name: vcap_slides
+    restart: unless-stopped
+    networks:
+      - vcap_net
+    ports:
+      - "8085:80"
+    volumes:
+      - /mnt/p4/home/kmw/vcap/slides:/usr/share/nginx/html:ro
+      - /mnt/p4/home/kmw/config/slides/nginx.conf:/etc/nginx/conf.d/default.conf:ro

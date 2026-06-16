@@ -1,21 +1,17 @@
 version: '3.8'
-
 networks:
   vcap_net:
     external: true
     name: vcap_net
-
 volumes:
   elgg_mariadb:
   elgg_data:
   elgg_static:
   elgg_db_backup:
   elgg_backup:
-
 services:
-
   db:
-    image: mariadb:latest
+    image: mariadb:11.4
     container_name: elgg_db
     restart: unless-stopped
     volumes:
@@ -26,13 +22,11 @@ services:
       MARIADB_PASSWORD: gaiter1990
       MARIADB_DATABASE: elgg
       MARIADB_ROOT_PASSWORD: gaiter1990
-    command: mariadbd-safe --skip-grant-tables
     networks:
       - vcap_net
-
   elgg:
     image: calteknet/elgg:latest
-    container_name: elgg_app
+    container_name: php-fpm
     restart: unless-stopped
     user: "33"
     depends_on:
@@ -43,7 +37,7 @@ services:
       - elgg_static:/opt/static
       - elgg_data:/opt/data
       - elgg_backup:/backup
-
+      - /home/kmw/osgeo17-vcap/stacks/elgg-settings.php:/elgg/elgg-config/settings.php:ro
   nginx:
     image: nginx:stable
     container_name: elgg_nginx
@@ -59,10 +53,9 @@ services:
       - /mnt/p4/home/kmw/config/elgg/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.elgg.rule=Host(`idea.localhost`)"
+      - "traefik.http.routers.elgg.rule=Host(`elgg.localhost`)"
       - "traefik.http.routers.elgg.entrypoints=web"
       - "traefik.http.services.elgg.loadbalancer.server.port=80"
-
   backup:
     image: alpine:latest
     container_name: elgg_backup

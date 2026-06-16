@@ -1,0 +1,39 @@
+# o19-local — Odoo 19 CE · CTN VCAP (OSGeoLive 17)
+# Repo: github.com/calteknet/osgeo17-vcap · Managed via Portainer
+# Env vars: ODOO_DB_PASSWORD
+version: '3.8'
+networks:
+  o19local:
+    attachable: true
+volumes:
+  19l_db:
+  19l_data:
+  19l_conf:
+services:
+  db:
+    image: postgres:18
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: "${ODOO_DB_PASSWORD}"
+    volumes:
+      - 19l_db:/var/lib/postgresql
+    networks: [o19local]
+  odoo:
+    image: odoo:19
+    restart: unless-stopped
+    depends_on: [db]
+    ports:
+      - target: 8069
+        published: 8069
+        protocol: tcp
+        mode: host
+    environment:
+      HOST: db
+      USER: odoo
+      PASSWORD: "${ODOO_DB_PASSWORD}"
+    volumes:
+      - 19l_data:/var/lib/odoo
+      - 19l_conf:/etc/odoo
+    networks: [o19local]
