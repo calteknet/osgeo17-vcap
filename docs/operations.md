@@ -119,3 +119,13 @@ All backups to that date were raw-file tars of the broken datadir — unusable.
 - Elgg (http://localhost:8086) ✓
 - exe.caltek.net tunnel ✓
 **This boot sequence is the replication target for all CTN nodes.**
+
+## OP-21 — CTN VCAP ISO Remaster (2026-06-16)
+- Base: OSGeoLive 17 (sda1 · /media/kmw/OSGEOLIVE17)
+- Build workspace: /dev/sda4 → /mnt/sd4/iso-build/
+- Output: /mnt/sd4/ctn-vcap-17.iso (4.0GB)
+- Docker 29.5.3 pre-installed
+- Apache vhosts pre-configured (8 *.localhost domains)
+- vcap_boot.sh enabled as systemd service
+- osgeo17-vcap repo cloned to /home/user/osgeo17-vcap
+- Build command: see scripts/build-iso.sh
