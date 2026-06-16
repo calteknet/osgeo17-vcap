@@ -129,3 +129,9 @@ All backups to that date were raw-file tars of the broken datadir — unusable.
 - vcap_boot.sh enabled as systemd service
 - osgeo17-vcap repo cloned to /home/user/osgeo17-vcap
 - Build command: see scripts/build-iso.sh
+
+## OP-22 — Auto-boot setup (2026-06-16)
+- Desktop shortcut: ~/Desktop/CTN-VCAP-Boot.sh
+- Systemd user service: ~/.config/systemd/user/vcap-boot.service
+- Runs vcap_boot.sh automatically at every login
+- To run manually: ~/osgeo17-vcap/scripts/vcap_boot.sh
