@@ -1,0 +1,23 @@
+# mailpit — local SMTP catch-all + web UI · CTN VCAP (OSGeoLive 17)
+# Web UI:  http://mail.localhost  (port 8025)
+# SMTP:    mailpit:1025  (use this hostname in Odoo/Elgg outgoing mail)
+# Repo: github.com/calteknet/osgeo17-vcap · Managed via Portainer
+version: '3.8'
+networks:
+  vcap_net:
+    external: true
+    name: vcap_net
+services:
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: mailpit
+    restart: unless-stopped
+    networks:
+      - vcap_net
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+    environment:
+      MP_MAX_MESSAGES: 500
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
