@@ -118,3 +118,7 @@ echo "================================================="
 cp -r /mnt/p4/home/kmw/cloudflared_config ~/.cloudflared 2>/dev/null || true
 cloudflared tunnel run exe-caltek &>/tmp/cloudflared.log &
 echo "✓ Cloudflare tunnel → https://exe.caltek.net"
+
+# Ensure default Apache vhost is disabled
+sudo a2dissite 000-default.conf 2>/dev/null || true
+sudo systemctl reload apache2 2>/dev/null || true
