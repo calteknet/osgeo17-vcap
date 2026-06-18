@@ -191,11 +191,11 @@ code { padding: 1px 5px; color: var(--br); }
       <div class="brand-sub">CalTekNet · Est. 1997 · kmw-20hgs0cl00 · OSGeoLive 17 · OP-10</div>
     </div>
     <div class="header-links">
-      <a class="hlink" href="http://elpx.localhost">↗ elpx</a>
-      <a class="hlink" href="http://exe.localhost">↗ exe</a>
-      <a class="hlink" href="http://odoo.localhost">↗ odoo</a>
-      <a class="hlink" href="http://elgg.localhost">↗ elgg</a>
-      <a class="hlink" href="http://vcap.localhost">↗ vcap</a>
+      <a class="hlink" href="http://elpx.localhost:81">↗ elpx</a>
+      <a class="hlink" href="http://exe.localhost:81">↗ exe</a>
+      <a class="hlink" href="http://odoo.localhost:81">↗ odoo</a>
+      <a class="hlink" href="http://elgg.localhost:81">↗ elgg</a>
+      <a class="hlink" href="http://vcap.localhost:81">↗ vcap</a>
       <a class="hlink" href="http://localhost:9000">↗ portainer</a>
       <a class="hlink" href="https://github.com/calteknet/osgeo17-vcap" target="_blank">↗ github</a>
     </div>
@@ -327,11 +327,11 @@ sudo ss -tlnp | grep -E ':80|:84|:86|:69|:85|:90'</pre>
 // ── Data ──────────────────────────────────────────────────────────────────────
 const DOMAINS = [
   { sub:"index",  url:"http://index.localhost",  service:"CTN Index Dashboard",  stack:"apache/static",        status:"live",     note:"This dashboard — master hub. Served from /home/kmw/osgeo17-vcap/dashboard/" },
-  { sub:"elpx",   url:"http://elpx.localhost",   service:"eXeLearning",          stack:"exe-local",            status:"live",     note:"Primary .elpx authoring → :8084" },
-  { sub:"exe",    url:"http://exe.localhost",     service:"eXeLearning (alias)",  stack:"exe-local",            status:"live",     note:"Alias for elpx.localhost" },
-  { sub:"odoo",   url:"http://odoo.localhost",   service:"Odoo 19 CE",           stack:"o19-local (Swarm)",    status:"live",     note:"Frontend API hub — connects all services → :8069" },
-  { sub:"elgg",   url:"http://elgg.localhost",   service:"Elgg Community",       stack:"live-osgoe-ctn-vcap",  status:"css",      note:"DB recovered; CSS cache needs flush → :8086" },
-  { sub:"vcap",   url:"http://vcap.localhost",   service:"VCAP Slides",          stack:"vcap-slides",          status:"live",     note:"nginx HTML export viewer → :8085" },
+  { sub:"elpx",   url:"http://elpx.localhost:81",   service:"eXeLearning",          stack:"exe-local",            status:"live",     note:"Primary .elpx authoring → :8084" },
+  { sub:"exe",    url:"http://exe.localhost:81",     service:"eXeLearning (alias)",  stack:"exe-local",            status:"live",     note:"Alias for elpx.localhost" },
+  { sub:"odoo",   url:"http://odoo.localhost:81",   service:"Odoo 19 CE",           stack:"o19-local (Swarm)",    status:"live",     note:"Frontend API hub — connects all services → :8069" },
+  { sub:"elgg",   url:"http://elgg.localhost:81",   service:"Elgg Community",       stack:"live-osgoe-ctn-vcap",  status:"css",      note:"DB recovered; CSS cache needs flush → :8086" },
+  { sub:"vcap",   url:"http://vcap.localhost:81",   service:"VCAP Slides",          stack:"vcap-slides",          status:"live",     note:"nginx HTML export viewer → :8085" },
   { sub:"class",  url:"http://class.localhost",  service:"Moodle/Kolibri",       stack:"—",                    status:"planned",  note:"Placeholder until Moodle stack deployed" },
 ];
 
@@ -441,7 +441,7 @@ DOMAINS.forEach(d => {
     <div class="row-between">
       <div class="row">
         <span class="dot ${STATUS_DOT[d.status]||'dot-dns'}"></span>
-        <a href="${d.url}" class="mono" style="font-size:14px;font-weight:700;color:var(--y)">${d.url}</a>
+        <a href="http://index.localhost:81" class="mono" style="font-size:14px;font-weight:700;color:var(--y)">${d.url}</a>
       </div>
       <div class="row">
         <span class="badge ${STATUS_BADGE[d.status]||'badge-br'}">${d.status}</span>
