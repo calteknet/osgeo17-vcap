@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=VCAP CTN Boot
-Exec=bash -c 'sleep 10 && bash /home/kmw/vcap/vcap_boot.sh >> /tmp/vcap_boot.log 2>&1'
+Exec=bash -c 'sleep 10 && bash /home/kmw/osgeo17-vcap/scripts/vcap_boot.sh >> /tmp/vcap_boot.log 2>&1'
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true

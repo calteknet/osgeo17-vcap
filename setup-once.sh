@@ -11,7 +11,7 @@ if [ "$ODOO_PASS" != "$ODOO_PASS2" ]; then
 fi
 
 # Update .env files
-for f in ~/stacks/o19-local/.env ~/stacks/live-osgoe-ctn-vcap/.env; do
+for f in ~/osgeo17-vcap/infra/o19-local/.env ~/osgeo17-vcap/stacks/ctn-local/.env; do
   [ -f "$f" ] && sed -i "s/changeme_odoo/$ODOO_PASS/" "$f" && echo "Updated $f"
 done
 
