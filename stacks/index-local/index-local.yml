@@ -1,0 +1,42 @@
+# ============================================================
+# index-local — CTN dashboard (Apache static serve)
+# stacks/index-local/docker-compose.yml
+# Route: index.localhost
+# Direct fallback: localhost:8088
+# OP-16 · github.com/calteknet/osgeo17-vcap
+# ============================================================
+# REQUIRES: ctn-local stack deployed first (external network)
+# NOTE: If OSGeoLive's native Apache2 already serves on :80,
+#   use this containerised stack on :8088 + let Traefik handle
+#   index.localhost routing. Do NOT conflict with host Apache.
+# ============================================================
+
+services:
+  apache:
+    image: httpd:2.4-alpine
+    container_name: index-local
+    ports:
+      - "8088:80"              # direct fallback (avoids host Apache conflict)
+    volumes:
+      - /opt/ctn/osgeo17-vcap/dashboard:/usr/local/apache2/htdocs:ro
+      # dashboard/index.html is the CTN Index (OP-11, 31K file)
+    networks:
+      - ctn-local
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=ctn-local"
+      - "traefik.http.routers.index.rule=Host(`index.localhost`)"
+      - "traefik.http.routers.index.entrypoints=web"
+      - "traefik.http.services.index.loadbalancer.server.port=80"
+
+networks:
+  ctn-local:
+    external: true             # created by ctn-local stack
+
+# ============================================================
+# ALTERNATIVE: if you prefer to keep serving via host Apache2
+#   instead of this container, add a Traefik file provider rule
+#   pointing index.localhost → http://127.0.0.1:80/dashboard/
+#   See: /opt/ctn/config/traefik/routes.yml
+# ============================================================

@@ -1,0 +1,95 @@
+# ============================================================
+# elgg-local — Elgg Community Platform
+# stacks/elgg-local/docker-compose.yml
+# (was: live-osgoe-ctn-vcap)
+# Route: elgg.localhost
+# Direct fallback: localhost:8086
+# OP-16 · github.com/calteknet/osgeo17-vcap
+# ============================================================
+# REQUIRES: ctn-local stack deployed first (external network)
+# NOTE: MariaDB volume recovered OP-07 — do NOT docker volume rm
+# ============================================================
+
+services:
+  nginx:
+    image: nginx:stable
+    container_name: elgg-nginx
+    depends_on:
+      - elgg
+    ports:
+      - "8086:80"              # direct fallback
+    volumes:
+      - elgg-data:/var/www/html:ro
+      - /opt/ctn/elgg-conf/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - ctn-local
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=ctn-local"
+      - "traefik.http.routers.elgg.rule=Host(`elgg.localhost`)"
+      - "traefik.http.routers.elgg.entrypoints=web"
+      - "traefik.http.services.elgg.loadbalancer.server.port=80"
+
+  elgg:
+    image: calteknet/elgg:latest
+    container_name: elgg-app
+    depends_on:
+      - mariadb
+    volumes:
+      - elgg-data:/var/www/html
+      - elgg-uploads:/var/www/html/data
+    environment:
+      - DB_HOST=mariadb
+      - DB_NAME=elgg
+      - DB_USER=elgg
+      - DB_PASSWORD=elgg_local_pw
+      - ELGG_WWWROOT=http://elgg.localhost
+    networks:
+      - ctn-local
+    restart: unless-stopped
+    # No Traefik labels — nginx is the public-facing service
+
+  mariadb:
+    image: mariadb:11.4
+    container_name: elgg-db
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=elgg
+      - MYSQL_USER=elgg
+      - MYSQL_PASSWORD=elgg_local_pw
+      - MYSQL_ROOT_PASSWORD=elgg_root_pw
+    networks:
+      - ctn-local
+    restart: unless-stopped
+    # No ports exposed — only reachable inside ctn-local network
+    # Port 3306 previously mapped to host — removed for security
+
+  backup:
+    image: alpine:latest
+    container_name: elgg-backup
+    volumes:
+      - elgg-data:/backup/html:ro
+      - mariadb-data:/backup/db:ro
+      - /mnt/p4/backups/elgg:/backup/out
+    entrypoint: >
+      sh -c "while true; do
+        tar czf /backup/out/elgg-backup-$$(date +%Y%m%d).tar.gz /backup/html /backup/db 2>/dev/null;
+        sleep 86400;
+      done"
+    networks:
+      - ctn-local
+    restart: unless-stopped
+
+volumes:
+  elgg-data:
+    name: elgg-local_elgg-data
+  elgg-uploads:
+    name: elgg-local_elgg-uploads
+  mariadb-data:
+    name: elgg-local_mariadb-data   # OP-07 recovered volume — keep name stable
+
+networks:
+  ctn-local:
+    external: true             # created by ctn-local stack

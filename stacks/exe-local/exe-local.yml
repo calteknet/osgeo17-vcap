@@ -1,0 +1,41 @@
+# ============================================================
+# exe-local — eXeLearning authoring environment
+# stacks/exe-local/docker-compose.yml
+# Routes: exe.localhost  +  elpx.localhost  (both → same container)
+# Direct fallback: localhost:8084
+# OP-16 · github.com/calteknet/osgeo17-vcap
+# ============================================================
+# REQUIRES: ctn-local stack deployed first (external network)
+# ============================================================
+
+services:
+  exe:
+    image: exelearning/exelearning:latest
+    container_name: exe-local
+    ports:
+      - "8084:8080"            # direct fallback — always works regardless of Traefik
+    volumes:
+      - /mnt/p4/elpx:/root/elpx   # persistent .elpx library on nvme0n1p4
+    networks:
+      - ctn-local
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=ctn-local"
+
+      # Route 1: exe.localhost
+      - "traefik.http.routers.exe.rule=Host(`exe.localhost`)"
+      - "traefik.http.routers.exe.entrypoints=web"
+      - "traefik.http.routers.exe.service=exe-svc"
+
+      # Route 2: elpx.localhost (alias — same container)
+      - "traefik.http.routers.elpx.rule=Host(`elpx.localhost`)"
+      - "traefik.http.routers.elpx.entrypoints=web"
+      - "traefik.http.routers.elpx.service=exe-svc"
+
+      # Shared backend service definition
+      - "traefik.http.services.exe-svc.loadbalancer.server.port=8080"
+
+networks:
+  ctn-local:
+    external: true             # created by ctn-local stack

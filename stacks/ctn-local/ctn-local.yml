@@ -1,0 +1,67 @@
+# ============================================================
+# ctn-local — Traefik router + Mailpit SMTP/webmail stack
+# stacks/ctn-local/docker-compose.yml
+# DEPLOY FIRST — creates the shared ctn-local bridge network
+# OP-16 · github.com/calteknet/osgeo17-vcap
+# ============================================================
+# PRE-FLIGHT: host nginx owns :80 — stop it first:
+#   sudo systemctl stop nginx && sudo systemctl disable nginx
+#   (OSGeoLive nginx is a dev server; Traefik replaces its role)
+#   Verify clear: sudo ss -tlnp | grep ':80 '
+# ============================================================
+
+services:
+
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=ctn-local"
+      - "--entrypoints.web.address=:80"
+      - "--log.level=INFO"
+      - "--accesslog=true"
+    ports:
+      - "80:80"        # primary routing — all *.localhost domains
+      - "8090:8080"    # Traefik dashboard → http://localhost:8090/dashboard/
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - ctn-local
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik-dash.rule=Host(`traefik.localhost`)"
+      - "traefik.http.routers.traefik-dash.entrypoints=web"
+      - "traefik.http.routers.traefik-dash.service=api@internal"
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: mailpit
+    ports:
+      - "8025:8025"    # web UI direct fallback → http://localhost:8025
+      - "1025:1025"    # SMTP — configure Odoo/Elgg to use localhost:1025
+    environment:
+      MP_MAX_MESSAGES: 500
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+    networks:
+      - ctn-local
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=ctn-local"
+      - "traefik.http.routers.mailpit.rule=Host(`mail.localhost`)"
+      - "traefik.http.routers.mailpit.entrypoints=web"
+      - "traefik.http.services.mailpit.loadbalancer.server.port=8025"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+networks:
+  ctn-local:
+    name: ctn-local
+    driver: bridge

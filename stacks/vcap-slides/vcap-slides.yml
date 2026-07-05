@@ -1,0 +1,33 @@
+# ============================================================
+# vcap-slides — VCAP slide viewer (nginx HTML export)
+# stacks/vcap-slides/docker-compose.yml
+# Route: vcap.localhost
+# Direct fallback: localhost:8085
+# OP-16 · github.com/calteknet/osgeo17-vcap
+# ============================================================
+# REQUIRES: ctn-local stack deployed first (external network)
+# ============================================================
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: vcap-slides
+    ports:
+      - "8085:80"              # direct fallback
+    volumes:
+      - /opt/ctn/vcap-slides:/usr/share/nginx/html:ro
+      # Slides exported from eXeLearning → /opt/ctn/vcap-slides/
+      # Or mount from p4: - /mnt/p4/vcap-slides:/usr/share/nginx/html:ro
+    networks:
+      - ctn-local
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=ctn-local"
+      - "traefik.http.routers.vcap.rule=Host(`vcap.localhost`)"
+      - "traefik.http.routers.vcap.entrypoints=web"
+      - "traefik.http.services.vcap.loadbalancer.server.port=80"
+
+networks:
+  ctn-local:
+    external: true             # created by ctn-local stack

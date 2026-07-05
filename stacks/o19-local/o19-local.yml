@@ -1,0 +1,67 @@
+# ============================================================
+# o19-local — Odoo 19 CE
+# stacks/o19-local/docker-compose.yml
+# Route: odoo.localhost
+# Direct fallback: localhost:8069
+# OP-16 · github.com/calteknet/osgeo17-vcap
+# ============================================================
+# REQUIRES: ctn-local stack deployed first (external network)
+# NOTE: postgres:18 mount is /var/lib/postgresql (NOT .../data)
+# NOTE: use odoo.conf file mount — never set admin_passwd in env
+# ============================================================
+
+services:
+  odoo:
+    image: odoo:19.0
+    container_name: o19-local
+    depends_on:
+      - postgres
+    ports:
+      - "8069:8069"            # direct fallback
+    volumes:
+      - odoo-data:/var/lib/odoo
+      - /opt/ctn/odoo-conf/odoo.conf:/etc/odoo/odoo.conf:ro
+    environment:
+      - HOST=postgres
+      - PORT=5432
+      - USER=odoo
+      - PASSWORD=odoo_local_pw
+    networks:
+      - ctn-local
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=ctn-local"
+      - "traefik.http.routers.odoo.rule=Host(`odoo.localhost`)"
+      - "traefik.http.routers.odoo.entrypoints=web"
+      - "traefik.http.services.odoo.loadbalancer.server.port=8069"
+
+      # Odoo longpolling (live chat / bus) — if needed locally
+      - "traefik.http.routers.odoo-lp.rule=Host(`odoo.localhost`) && PathPrefix(`/longpolling`)"
+      - "traefik.http.routers.odoo-lp.entrypoints=web"
+      - "traefik.http.routers.odoo-lp.service=odoo-lp-svc"
+      - "traefik.http.services.odoo-lp-svc.loadbalancer.server.port=8072"
+
+  postgres:
+    image: postgres:18
+    container_name: o19-local-db
+    volumes:
+      - postgres-data:/var/lib/postgresql   # NOTE: no /data suffix — pg18 layout
+    environment:
+      - POSTGRES_DB=odoo
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo_local_pw
+    networks:
+      - ctn-local
+    restart: unless-stopped
+    # No ports exposed — only reachable inside ctn-local network
+
+volumes:
+  odoo-data:
+    name: o19-local_odoo-data
+  postgres-data:
+    name: o19-local_postgres-data
+
+networks:
+  ctn-local:
+    external: true             # created by ctn-local stack
