@@ -1,16 +1,65 @@
-version: "3.8"
 services:
+
   exelearning:
-    image: exelearning/exelearning:latest
-    container_name: exelearning
-    restart: unless-stopped
+    image: ghcr.io/exelearning/exelearning:latest
+    environment:
+      DB_DRIVER: pdo_sqlite
+      DB_PATH: /mnt/data/exelearning.db
+      APP_SECRET: ctn-vcap-exe-secret-2026
+      APP_PORT: 8080
+      FILES_DIR: /mnt/data/
+      APP_AUTH_METHODS: password
+      MAILER_DSN: smtp://ctn-local_mailpit:1025
+    volumes:
+      - exe-data:/mnt/data
     ports:
       - "8084:8080"
-    volumes:
-      - /mnt/p4/elpx:/data/elpx
-      - /mnt/p4/exports:/data/exports
     networks:
-      - exe-net
+      - ctn-local
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == kmw-20hgs0cl00
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.exe.rule=Host(`exe.localhost`) || Host(`elpx.localhost`)"
+        - "traefik.http.routers.exe.entrypoints=web"
+        - "traefik.http.services.exe.loadbalancer.server.port=8080"
+
+  init:
+    image: ghcr.io/exelearning/exelearning:latest
+    environment:
+      DB_DRIVER: pdo_sqlite
+      DB_PATH: /mnt/data/exelearning.db
+      APP_SECRET: ctn-vcap-exe-secret-2026
+      FILES_DIR: /mnt/data/
+    volumes:
+      - exe-data:/mnt/data
+    networks:
+      - ctn-local
+    command: >
+      /bin/sh -c "
+        sleep 15 &&
+        bun run dist/cli.js create-user admin@caltek.net CTNvcap2026! admin 2>/dev/null || true &&
+        bun run dist/cli.js promote-admin admin@caltek.net 2>/dev/null || true &&
+        bun run dist/cli.js create-user backup@caltek.net CTNvcap2026! backup-admin 2>/dev/null || true &&
+        bun run dist/cli.js promote-admin backup@caltek.net 2>/dev/null || true &&
+        bun run dist/cli.js create-user dkz@caltek.net CTNvcap2026! dkz 2>/dev/null || true &&
+        echo 'Init complete'
+      "
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == kmw-20hgs0cl00
+      restart_policy:
+        condition: none
+
 networks:
-  exe-net:
-    driver: bridge
+  ctn-local:
+    external: true
+
+volumes:
+  exe-data:
