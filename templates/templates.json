@@ -1,0 +1,110 @@
+{
+  "version": "2",
+  "templates": [
+    {
+      "type": 2,
+      "title": "ctn-local",
+      "name": "ctn-local",
+      "description": "Traefik v3.7 + Mailpit — deploy first, creates ctn-local overlay network",
+      "platform": "linux",
+      "categories": ["ctn-vcap", "infrastructure"],
+      "note": "<b>Deploy this stack first.</b> Traefik routes *.localhost on port 81. Mailpit SMTP on :1025, UI :8025.",
+      "repository": {
+        "url": "https://github.com/calteknet/osgeo17-vcap",
+        "stackfile": "stacks/ctn-local/docker-compose.yml"
+      }
+    },
+    {
+      "type": 2,
+      "title": "elgg-local",
+      "name": "elgg-local",
+      "description": "Elgg 6.3.5 community platform at idea.localhost and elgg.localhost",
+      "platform": "linux",
+      "categories": ["ctn-vcap", "education"],
+      "note": "Requires ctn-local. External volumes: elgg_mariadb, elgg_data, elgg_static. Host configs at /mnt/p4/home/kmw/config/elgg/",
+      "repository": {
+        "url": "https://github.com/calteknet/osgeo17-vcap",
+        "stackfile": "stacks/elgg-local/docker-compose.yml"
+      },
+      "env": [
+        {
+          "name": "MARIADB_PASSWORD",
+          "label": "MariaDB Password",
+          "default": "CTNvcap2026!"
+        }
+      ]
+    },
+    {
+      "type": 2,
+      "title": "o19-local",
+      "name": "o19-local",
+      "description": "Odoo 19 CE at odoo.localhost:8069 — ERP/CRM/LMS hub",
+      "platform": "linux",
+      "categories": ["ctn-vcap", "erp"],
+      "note": "Requires ctn-local. Master password: 50ea2ae29052ad1c57a41518. Admin reset via odoo shell.",
+      "repository": {
+        "url": "https://github.com/calteknet/osgeo17-vcap",
+        "stackfile": "stacks/o19-local/docker-compose.yml"
+      },
+      "env": [
+        {
+          "name": "ODOO_DB_PASSWORD",
+          "label": "Odoo DB Password",
+          "default": "CTNvcap2026!"
+        }
+      ]
+    },
+    {
+      "type": 2,
+      "title": "exe-local",
+      "name": "exe-local",
+      "description": "eXeLearning v4 at exe.localhost and elpx.localhost:8084 — SQLite backend",
+      "platform": "linux",
+      "categories": ["ctn-vcap", "education", "authoring"],
+      "note": "Requires ctn-local. Init container creates admin@caltek.net, backup@caltek.net, dkz@caltek.net with password CTNvcap2026! Password reset: scripts/exe-reset-password.sh",
+      "repository": {
+        "url": "https://github.com/calteknet/osgeo17-vcap",
+        "stackfile": "stacks/exe-local/docker-compose.yml"
+      }
+    },
+    {
+      "type": 2,
+      "title": "vcap-slides",
+      "name": "vcap-slides",
+      "description": "VCAP slide viewer — nginx serving HTML presentations at vcap.localhost:8085",
+      "platform": "linux",
+      "categories": ["ctn-vcap", "content"],
+      "note": "Serves static HTML from /mnt/p4/home/kmw/vcap/slides. No database.",
+      "repository": {
+        "url": "https://github.com/calteknet/osgeo17-vcap",
+        "stackfile": "stacks/vcap-slides/docker-compose.yml"
+      }
+    },
+    {
+      "type": 2,
+      "title": "openacs-local",
+      "name": "openacs-local",
+      "description": "OpenACS — gustafn Docker image, Postgres backend",
+      "platform": "linux",
+      "categories": ["ctn-vcap", "education"],
+      "note": "Based on gustafn/openacs Docker image. Planned for openacs.org local mirror and workshop content with dkz.",
+      "repository": {
+        "url": "https://github.com/calteknet/osgeo17-vcap",
+        "stackfile": "stacks/openacs-local/docker-compose.yml"
+      }
+    },
+    {
+      "type": 2,
+      "title": "omeka-local",
+      "name": "omeka-local",
+      "description": "Omeka-S digital collections platform — MariaDB backend",
+      "platform": "linux",
+      "categories": ["ctn-vcap", "archives"],
+      "note": "For CTN archival work, Edmondson Institute collections, and Leimert Park multimedia archives. Work planned with dkz.",
+      "repository": {
+        "url": "https://github.com/calteknet/osgeo17-vcap",
+        "stackfile": "stacks/omeka-local/docker-compose.yml"
+      }
+    }
+  ]
+}
